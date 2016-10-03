@@ -1,4 +1,4 @@
-**CS319-Group 9**
+# CS319-Group 9 #
 
 Group members:
 
@@ -6,7 +6,7 @@ Group members:
 2.  Yunus Ölez
 3.  Zeynep Delal Mutlu
 
-**Project:**
+## Project: ##
 
 Our project is a replica of the game "Curve Fever 2". It will be a Java Desktop Application. 
 
