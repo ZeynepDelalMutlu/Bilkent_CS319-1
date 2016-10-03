@@ -17,3 +17,9 @@ in our application we will focus on playing on the same computer. In this game, 
 allowed changes in the color. When the game starts, the colors to move by their head and leave a pattern behind themselves while giving
 some gaps. The objective of the game is not the cross each others color. The players are allowed to move their color, either left or right.
 During gameplay, there pops some popups in the screen which can either give player a boost or harden the gameplay for his/her.
+
+## Meetings: ##
+
+Meetings are based on our common free hours. It might change depending on the week and workload
+Tuesday 15:40 - 17:30 , Thursday 10:40 - 12:30
+
