@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by User on 8.12.2016.
+ * Created by Baris Poyraz on 8.12.2016.
  */
 public class CreditsPanel extends JPanel {
 

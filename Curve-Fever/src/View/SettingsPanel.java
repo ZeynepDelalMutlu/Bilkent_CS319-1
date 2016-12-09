@@ -9,20 +9,23 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by Baris Poyraz on 9.12.2016.
+ * Created by Barış Poyraz on 9.12.2016.
  */
-public class HelpPanel extends JPanel {
+public class SettingsPanel extends JPanel {
 
-    private JButton backButton;
     private CanvasView canvasView;
+    private JButton backButton;
+
+    private JLabel title;
 
     private Border border;
 
-    public HelpPanel(CanvasView canvasView){
+    public SettingsPanel(CanvasView canvasView){
         this.canvasView = canvasView;
         setBackground(Color.BLACK);
 
         buttonDesigner();
+
     }
 
     private void buttonDesigner(){
@@ -34,10 +37,9 @@ public class HelpPanel extends JPanel {
         backButton.setBorder(border);
 
         backButton.addActionListener(new ButtonActionListener());
-
         backButton.addMouseListener(new ButtonMouseListener());
-        add(backButton);
 
+        add(backButton);
     }
 
     private class ButtonActionListener implements ActionListener{
@@ -52,20 +54,19 @@ public class HelpPanel extends JPanel {
 
     private class ButtonMouseListener implements MouseListener{
         @Override
-        public void mousePressed(MouseEvent e) { }
+        public void mouseClicked(MouseEvent e) { }
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if(e.getSource() == backButton)
+                backButton.setForeground(new Color(47, 165, 255));
+        }
         @Override
         public void mouseExited(MouseEvent e) {
             backButton.setForeground(Color.WHITE);
         }
         @Override
-        public void mouseEntered(MouseEvent e) {
-            if(e.getSource() == backButton){
-                backButton.setForeground(new Color(47, 165, 255));
-            }
-        }
+        public void mousePressed(MouseEvent e) {}
         @Override
-        public void mouseClicked(MouseEvent e) { }
-        @Override
-        public void mouseReleased(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) {}
     }
 }
