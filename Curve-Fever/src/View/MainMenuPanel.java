@@ -57,7 +57,7 @@ public class MainMenuPanel extends JPanel {
 
         title2 = new JLabel(fever);
         title2.setForeground(new Color(255, 106, 0));
-        title2.setFont(new Font(super.getName(), Font.PLAIN, 60));
+        title2.setFont(new Font("Calibri", Font.PLAIN, 60));
 
         textPanel.add(title1);
         textPanel.add(title2);

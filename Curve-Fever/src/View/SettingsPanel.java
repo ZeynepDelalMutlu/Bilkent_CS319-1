@@ -19,10 +19,13 @@ public class SettingsPanel extends JPanel {
     private JLabel title;
 
     private Border border;
+    private Insets insets;
+    private Dimension size;
 
     public SettingsPanel(CanvasView canvasView){
         this.canvasView = canvasView;
         setBackground(Color.BLACK);
+        setLayout(null);
 
         buttonDesigner();
 
@@ -35,11 +38,16 @@ public class SettingsPanel extends JPanel {
         backButton.setBackground(Color.BLACK);
         backButton.setForeground(Color.WHITE);
         backButton.setBorder(border);
+        backButton.setFont(new Font("Calibri", Font.PLAIN, 30));
 
         backButton.addActionListener(new ButtonActionListener());
         backButton.addMouseListener(new ButtonMouseListener());
 
         add(backButton);
+
+        insets = super.getInsets();
+        size = backButton.getPreferredSize();
+        backButton.setBounds(940+ insets.left, 690 + insets.top, size.width, size.height);
     }
 
     private class ButtonActionListener implements ActionListener{
