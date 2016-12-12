@@ -21,55 +21,53 @@ public class MainMenuPanel extends JPanel {
 
     private Border border;
 
-    private JPanel textPanel;
-    private JPanel buttonPanel;
-
     private JLabel title1;
     private JLabel title2;
 
-    private BorderLayout borderLayout;
+    private Insets insets;
+    private Dimension size;
 
     private CanvasView canvasView;
 
     public MainMenuPanel(CanvasView canvasView){
-        super(new BorderLayout());
         this.canvasView = canvasView;
         setBackground(Color.BLACK);
-
+        setLayout(null);
 
         titleDesigner();
-        add(textPanel, BorderLayout.NORTH);
         buttonDesigner();
-        add(buttonPanel, BorderLayout.CENTER);
+
 
     }
 
-    public void titleDesigner(){
-        textPanel = new JPanel();
-        textPanel.setBackground(Color.BLACK);
+    private void titleDesigner(){
+        border = BorderFactory.createEmptyBorder();
 
         String curve = "Curve";
         String fever = "Fever";
 
         title1 = new JLabel(curve);
         title1.setForeground(new Color(159,49,178));
-        title1.setFont(new Font( super.getName() , Font.PLAIN, 60  ));
+        title1.setFont(fontTitle());
 
         title2 = new JLabel(fever);
         title2.setForeground(new Color(255, 106, 0));
-        title2.setFont(new Font("Calibri", Font.PLAIN, 60));
+        title2.setFont(fontTitle());
 
-        textPanel.add(title1);
-        textPanel.add(title2);
+        add(title1);
+        add(title2);
 
-        textPanel.setLocation(500,500);
+        insets = super.getInsets();
+        size = title1.getPreferredSize();
+
+        title1.setLocation(400, 125);
+        title1.setSize(400,200);
+
+        title2.setLocation(515,175);
+        title2.setSize(400,200);
     }
 
-    public void buttonDesigner(){
-        buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.BLACK);
-
-        Box box = Box.createVerticalBox();
+    private void buttonDesigner(){
 
         playButton = new JButton("Play");
         settingsButton = new JButton("Settings");
@@ -81,19 +79,22 @@ public class MainMenuPanel extends JPanel {
         playButton.setBackground(Color.BLACK);
         playButton.setForeground(Color.WHITE);
         playButton.setBorder(border);
+        playButton.setFont(fontButton());
 
         settingsButton.setBackground(Color.BLACK);
         settingsButton.setForeground(Color.WHITE);
         settingsButton.setBorder(border);
+        settingsButton.setFont(fontButton());
 
         helpButton.setBackground(Color.BLACK);
         helpButton.setForeground(Color.WHITE);
         helpButton.setBorder(border);
+        helpButton.setFont(fontButton());
 
         creditsButton.setBackground(Color.BLACK);
         creditsButton.setForeground(Color.WHITE);
         creditsButton.setBorder(border);
-
+        creditsButton.setFont(fontButton());
 
         playButton.addMouseListener(new ButtonMouseListener());
         settingsButton.addMouseListener(new ButtonMouseListener());
@@ -105,12 +106,35 @@ public class MainMenuPanel extends JPanel {
         helpButton.addActionListener(new ButtonActionListener());
         creditsButton.addActionListener(new ButtonActionListener());
 
-        box.add(playButton);
-        box.add(settingsButton);
-        box.add(helpButton);
-        box.add(creditsButton);
+        buttonPlacer();
+    }
 
-        buttonPanel.add(box);
+    private void buttonPlacer(){
+        insets = super.getInsets();
+
+        size = playButton.getPreferredSize();
+        playButton.setBounds(500+ insets.left, 360 + insets.top, size.width, size.height);
+
+        size = settingsButton.getPreferredSize();
+        settingsButton.setBounds(500+ insets.left, 435 + insets.top, size.width, size.height);
+
+        size = helpButton.getPreferredSize();
+        helpButton.setBounds(500+ insets.left, 510 + insets.top, size.width, size.height);
+
+        size = creditsButton.getPreferredSize();
+        creditsButton.setBounds(920+ insets.left, 690 + insets.top, size.width, size.height);
+
+        add(playButton);
+        add(settingsButton);
+        add(helpButton);
+        add(creditsButton);
+    }
+
+    private Font fontTitle(){
+        return new Font("Calibri", Font.PLAIN, 50);
+    }
+    private Font fontButton() {
+        return new Font("Calibri", Font.PLAIN, 30);
     }
 
     private class ButtonActionListener implements ActionListener{

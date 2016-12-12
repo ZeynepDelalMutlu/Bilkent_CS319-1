@@ -18,6 +18,8 @@ public class CreditsPanel extends JPanel {
     private JButton backButton;
     private JLabel heading;
     private JLabel credits1;
+    private JLabel credits2;
+    private JLabel credits3;
 
     private Border border;
     private Insets insets;
@@ -40,7 +42,7 @@ public class CreditsPanel extends JPanel {
         backButton.setBackground(Color.BLACK);
         backButton.setForeground(Color.WHITE);
         backButton.setBorder(border);
-        backButton.setFont(new Font("Calibri", Font.PLAIN, 30));
+        backButton.setFont(font());
 
         backButton.addActionListener(new ButtonActionListener());
         backButton.addMouseListener(new ButtonMouseListener());
@@ -55,23 +57,45 @@ public class CreditsPanel extends JPanel {
 
     public void textDesigner(){
         heading = new JLabel("Credits");
-        heading.setFont(new Font("Calibri", Font.PLAIN, 45));
+        heading.setFont(font());
         heading.setForeground(Color.WHITE);
         add(heading);
 
         String text = "This project is a part of CS319" + "\n" + " course in Bilkent University.";
-        credits1 = new JLabel(text);
-        credits1.setFont(new Font("Calibri", Font.PLAIN, 30));
+        credits1 = new JLabel("<html>" +text+"</html>");
+        credits1.setFont(font());
         credits1.setForeground(Color.WHITE);
         add(credits1);
+
+        String text2 = "<center>Yunus Ölez<br>Barış Poyraz<br>Zeynep Delal Mutlu</center>";
+        credits2 = new JLabel("<html>" + text2 +"</html>");
+        credits2.setFont(font());
+        credits2.setForeground(Color.WHITE);
+        add(credits2);
+
+        String text3 = "<center>Special thanks to<br>Bora Güngören</center>";
+        credits3 = new JLabel("<html>" + text3 + "</html>");
+        credits3.setFont(font());
+        credits3.setForeground(Color.WHITE);
+        add(credits3);
 
         insets = super.getInsets();
         size = heading.getPreferredSize();
 
         heading.setBounds(470+ insets.left, 80 + insets.top, size.width, size.height);
 
-        credits1.setLocation(170, 150);
-        credits1.setSize(1024,100);
+        credits1.setLocation(350, 125);
+        credits1.setSize(400,200);
+
+        credits2.setLocation(400,225);
+        credits2.setSize(400,300);
+
+        credits3.setLocation(425, 325);
+        credits3.setSize(400,400);
+    }
+
+    private Font font(){
+        return new Font("Calibri", Font.PLAIN, 30);
     }
 
     private class ButtonActionListener implements ActionListener{

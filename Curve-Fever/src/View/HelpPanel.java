@@ -16,6 +16,8 @@ public class HelpPanel extends JPanel {
     private JButton backButton;
     private CanvasView canvasView;
 
+    private JLabel ins;
+
     private Border border;
     private Insets insets;
     private Dimension size;
@@ -26,6 +28,7 @@ public class HelpPanel extends JPanel {
         setLayout(null);
 
         buttonDesigner();
+        textDesigner();
     }
 
     private void buttonDesigner(){
@@ -45,6 +48,27 @@ public class HelpPanel extends JPanel {
         insets = super.getInsets();
         size = backButton.getPreferredSize();
         backButton.setBounds(940+ insets.left, 690 + insets.top, size.width, size.height);
+    }
+
+    private void textDesigner(){
+
+        ins = new JLabel("Help");
+        ins.setFont(fontTitle());
+        ins.setForeground(Color.WHITE);
+
+        insets = super.getInsets();
+        size = ins.getPreferredSize();
+        ins.setBounds(475, 125, size.width, size.height);
+
+        add(ins);
+
+
+
+
+    }
+
+    private Font fontTitle(){
+        return new Font("Calibri", Font.PLAIN, 50);
     }
 
     private class ButtonActionListener implements ActionListener{
