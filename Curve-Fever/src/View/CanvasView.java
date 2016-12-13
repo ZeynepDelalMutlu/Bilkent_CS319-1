@@ -10,6 +10,7 @@ public class CanvasView extends JPanel {
 
     //Instances for View Classes
     private MainMenuPanel mainMenuPanel;
+    private PlayerSelectionPanel playerSelectionPanel;
     private SettingsPanel settingsPanel;
     private CreditsPanel creditsPanel;
     private HelpPanel helpPanel;
@@ -30,12 +31,14 @@ public class CanvasView extends JPanel {
 
         //Creates each panel
         mainMenuPanel = new MainMenuPanel(this);
+        playerSelectionPanel = new PlayerSelectionPanel(this);
         settingsPanel = new SettingsPanel(this);
         creditsPanel = new CreditsPanel(this);
         helpPanel = new HelpPanel(this);
 
         //Puts each panel in cardlayout making switching from panels easier
         super.add(mainMenuPanel, mainMenu);
+        super.add(playerSelectionPanel, playerSelection);
         super.add(settingsPanel, settingsMenu);
         super.add(creditsPanel, creditsMenu);
         super.add(helpPanel, helpMenu);
@@ -43,7 +46,7 @@ public class CanvasView extends JPanel {
 
     /**
      * Main Menu Panel String for CardLayout
-     * @return mainMenu
+     * @return mainMenu Key String for CardLayout
      */
     public String getMainMenu(){
         return mainMenu;
@@ -51,7 +54,7 @@ public class CanvasView extends JPanel {
 
     /**
      * Player Selection Panel String for CardLayout
-     * @return playerSelection
+     * @return playerSelection Key String for CardLayout
      */
     public String getPlay(){
         return playerSelection;
@@ -59,7 +62,7 @@ public class CanvasView extends JPanel {
 
     /**
      * Settings Panel String for CardLayout
-     * @return settingsMenu
+     * @return settingsMenu Key String for CardLayout
      */
     public String getSettings(){
         return settingsMenu;
@@ -67,7 +70,7 @@ public class CanvasView extends JPanel {
 
     /**
      * Help Panel String for CardLayout
-     * @return helpMenu
+     * @return helpMenu Key String for CardLayout
      */
     public String getHelp(){
         return helpMenu;
@@ -75,10 +78,9 @@ public class CanvasView extends JPanel {
 
     /**
      * Credits Panel String for CardLayout
-     * @return creditsMenu
+     * @return creditsMenu Key String for CardLayout
      */
     public String getCredits(){
         return creditsMenu;
     }
-
 }

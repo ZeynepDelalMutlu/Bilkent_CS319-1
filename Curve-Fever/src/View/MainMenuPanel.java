@@ -130,18 +130,14 @@ public class MainMenuPanel extends JPanel {
     private class ButtonMouseListener implements MouseListener{
         @Override
         public void mouseEntered(MouseEvent e) {
-            if(e.getSource() == playButton){
+            if(e.getSource() == playButton)
                 playButton.setForeground(new Color(47, 165, 255));
-            }
-            if(e.getSource() == settingsButton){
+            if(e.getSource() == settingsButton)
                 settingsButton.setForeground(new Color(47, 165, 255));
-            }
-            if(e.getSource() == helpButton){
+            if(e.getSource() == helpButton)
                 helpButton.setForeground(new Color(47, 165, 255));
-            }
-            if(e.getSource() == creditsButton){
+            if(e.getSource() == creditsButton)
                 creditsButton.setForeground(new Color(47, 165, 255));
-            }
         }
         @Override
         public void mouseClicked(MouseEvent e) { }
@@ -157,5 +153,4 @@ public class MainMenuPanel extends JPanel {
         @Override
         public void mouseReleased(MouseEvent e) { }
     }
-
 }
