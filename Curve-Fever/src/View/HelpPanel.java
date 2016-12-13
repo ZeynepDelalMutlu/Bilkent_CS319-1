@@ -1,7 +1,6 @@
 package View;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +14,7 @@ public class HelpPanel extends JPanel {
 
     private JButton backButton;
     private CanvasView canvasView;
-
     private JLabel ins;
-
-    private Border border;
     private Insets insets;
     private Dimension size;
 
@@ -26,49 +22,48 @@ public class HelpPanel extends JPanel {
         this.canvasView = canvasView;
         setBackground(Color.BLACK);
         setLayout(null);
-
-        buttonDesigner();
-        textDesigner();
-    }
-
-    private void buttonDesigner(){
-        border = BorderFactory.createEmptyBorder();
-
-        backButton = new JButton("Back");
-        backButton.setBackground(Color.BLACK);
-        backButton.setForeground(Color.WHITE);
-        backButton.setBorder(border);
-        backButton.setFont(new Font("Calibri", Font.PLAIN, 30));
-
-        backButton.addActionListener(new ButtonActionListener());
-
-        backButton.addMouseListener(new ButtonMouseListener());
-        add(backButton);
-
         insets = super.getInsets();
-        size = backButton.getPreferredSize();
-        backButton.setBounds(940+ insets.left, 690 + insets.top, size.width, size.height);
+
+        backButton = buttonDesigner("Back");
+        buttonPlacer(backButton,940+ insets.left, 690 + insets.top);
+        ins = textDesigner("Help");
+        textPlacer(ins, 475, 125);
     }
 
-    private void textDesigner(){
+    private JButton buttonDesigner(String text){
+        JButton button = new JButton(text);
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.WHITE);
+        button.setBorder(BorderFactory.createEmptyBorder());
+        button.setFont(font());
 
-        ins = new JLabel("Help");
-        ins.setFont(fontTitle());
-        ins.setForeground(Color.WHITE);
+        button.addActionListener(new ButtonActionListener());
+        button.addMouseListener(new ButtonMouseListener());
 
-        insets = super.getInsets();
-        size = ins.getPreferredSize();
-        ins.setBounds(475, 125, size.width, size.height);
-
-        add(ins);
-
-
-
-
+        return button;
     }
 
-    private Font fontTitle(){
-        return new Font("Calibri", Font.PLAIN, 50);
+    private void buttonPlacer(JButton button, int x, int y){
+        size = button.getPreferredSize();
+        button.setBounds(x, y, size.width, size.height);
+        add(button);
+    }
+
+    private JLabel textDesigner(String text){
+        JLabel label = new JLabel(text);
+        label.setFont(font());
+        label.setForeground(Color.WHITE);
+        return label;
+    }
+
+    private void textPlacer(JLabel label, int x, int y){
+        size = label.getPreferredSize();
+        label.setBounds(x, y, size.width, size.height);
+        add(label);
+    }
+
+    private Font font(){
+        return new Font("Calibri", Font.PLAIN, 30);
     }
 
     private class ButtonActionListener implements ActionListener{

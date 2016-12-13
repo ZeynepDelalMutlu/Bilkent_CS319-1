@@ -1,7 +1,6 @@
 package View;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +14,7 @@ public class SettingsPanel extends JPanel {
 
     private CanvasView canvasView;
     private JButton backButton;
-
     private JLabel title;
-
-    private Border border;
     private Insets insets;
     private Dimension size;
 
@@ -26,28 +22,50 @@ public class SettingsPanel extends JPanel {
         this.canvasView = canvasView;
         setBackground(Color.BLACK);
         setLayout(null);
+        insets = super.getInsets();
 
-        buttonDesigner();
+        backButton = buttonDesigner("Back");
+        buttonPlacer(backButton, 940+ insets.left, 690 + insets.top);
+
+        title = textDesigner("Settings");
+        textPlacer(title, 470+ insets.left, 80 + insets.top);
+    }
+
+    private JButton buttonDesigner(String text){
+        JButton button = new JButton(text);
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.WHITE);
+        button.setBorder(BorderFactory.createEmptyBorder());
+        button.setFont(font());
+
+        button.addActionListener(new ButtonActionListener());
+        button.addMouseListener(new ButtonMouseListener());
+        return button;
+
 
     }
 
-    private void buttonDesigner(){
-        border = BorderFactory.createEmptyBorder();
+    private void buttonPlacer(JButton button, int x, int y){
+        size = button.getPreferredSize();
+        button.setBounds(x, y, size.width, size.height);
+        add(button);
+    }
 
-        backButton = new JButton("Back");
-        backButton.setBackground(Color.BLACK);
-        backButton.setForeground(Color.WHITE);
-        backButton.setBorder(border);
-        backButton.setFont(new Font("Calibri", Font.PLAIN, 30));
+    private JLabel textDesigner(String text){
+        JLabel label = new JLabel(text);
+        label.setFont(font());
+        label.setForeground(Color.WHITE);
+        return label;
+    }
 
-        backButton.addActionListener(new ButtonActionListener());
-        backButton.addMouseListener(new ButtonMouseListener());
+    private void textPlacer(JLabel label, int x, int y){
+        size = label.getPreferredSize();
+        label.setBounds(x, y, size.width, size.height);
+        add(label);
+    }
 
-        add(backButton);
-
-        insets = super.getInsets();
-        size = backButton.getPreferredSize();
-        backButton.setBounds(940+ insets.left, 690 + insets.top, size.width, size.height);
+    private Font font(){
+        return new Font("Calibri", Font.PLAIN, 30);
     }
 
     private class ButtonActionListener implements ActionListener{

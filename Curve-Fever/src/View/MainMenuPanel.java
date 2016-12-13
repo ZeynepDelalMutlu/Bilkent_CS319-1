@@ -34,9 +34,18 @@ public class MainMenuPanel extends JPanel {
         setBackground(Color.BLACK);
         setLayout(null);
 
-        titleDesigner();
-        buttonDesigner();
+        insets = super.getInsets();
 
+        titleDesigner();
+        playButton = buttonDesigner("Play");
+        settingsButton = buttonDesigner("Settings");
+        helpButton = buttonDesigner("Help");
+        creditsButton = buttonDesigner("Credits");
+
+        buttonPlacer(playButton, 500+ insets.left, 360 + insets.top);
+        buttonPlacer(settingsButton, 500+ insets.left, 435);
+        buttonPlacer(helpButton, 500+ insets.left, 510 + insets.top );
+        buttonPlacer(creditsButton,920+ insets.left, 690 + insets.top);
 
     }
 
@@ -67,67 +76,25 @@ public class MainMenuPanel extends JPanel {
         title2.setSize(400,200);
     }
 
-    private void buttonDesigner(){
+    private JButton buttonDesigner(String text){
+        JButton button = new JButton(text);
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.WHITE);
+        button.setFont(fontButton());
+        button.setBorder(BorderFactory.createEmptyBorder());
 
-        playButton = new JButton("Play");
-        settingsButton = new JButton("Settings");
-        helpButton = new JButton("Help");
-        creditsButton = new JButton("Credits");
+        button.addMouseListener(new ButtonMouseListener());
+        button.addActionListener(new ButtonActionListener());
 
-        border = BorderFactory.createEmptyBorder();
-
-        playButton.setBackground(Color.BLACK);
-        playButton.setForeground(Color.WHITE);
-        playButton.setBorder(border);
-        playButton.setFont(fontButton());
-
-        settingsButton.setBackground(Color.BLACK);
-        settingsButton.setForeground(Color.WHITE);
-        settingsButton.setBorder(border);
-        settingsButton.setFont(fontButton());
-
-        helpButton.setBackground(Color.BLACK);
-        helpButton.setForeground(Color.WHITE);
-        helpButton.setBorder(border);
-        helpButton.setFont(fontButton());
-
-        creditsButton.setBackground(Color.BLACK);
-        creditsButton.setForeground(Color.WHITE);
-        creditsButton.setBorder(border);
-        creditsButton.setFont(fontButton());
-
-        playButton.addMouseListener(new ButtonMouseListener());
-        settingsButton.addMouseListener(new ButtonMouseListener());
-        helpButton.addMouseListener(new ButtonMouseListener());
-        creditsButton.addMouseListener(new ButtonMouseListener());
-
-        playButton.addActionListener(new ButtonActionListener());
-        settingsButton.addActionListener(new ButtonActionListener());
-        helpButton.addActionListener(new ButtonActionListener());
-        creditsButton.addActionListener(new ButtonActionListener());
-
-        buttonPlacer();
+        return button;
     }
 
-    private void buttonPlacer(){
-        insets = super.getInsets();
+    private void buttonPlacer(JButton button, int x, int y){
 
-        size = playButton.getPreferredSize();
-        playButton.setBounds(500+ insets.left, 360 + insets.top, size.width, size.height);
+        size = button.getPreferredSize();
+        button.setBounds(x, y, size.width, size.height);
 
-        size = settingsButton.getPreferredSize();
-        settingsButton.setBounds(500+ insets.left, 435 + insets.top, size.width, size.height);
-
-        size = helpButton.getPreferredSize();
-        helpButton.setBounds(500+ insets.left, 510 + insets.top, size.width, size.height);
-
-        size = creditsButton.getPreferredSize();
-        creditsButton.setBounds(920+ insets.left, 690 + insets.top, size.width, size.height);
-
-        add(playButton);
-        add(settingsButton);
-        add(helpButton);
-        add(creditsButton);
+        add(button);
     }
 
     private Font fontTitle(){
