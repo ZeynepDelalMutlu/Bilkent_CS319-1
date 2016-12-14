@@ -149,7 +149,9 @@ public class MainMenuPanel extends JPanel {
             creditsButton.setForeground(Color.WHITE);
         }
         @Override
-        public void mousePressed(MouseEvent e) { }
+        public void mousePressed(MouseEvent e) {
+            //creditsButton.setContentAreaFilled(false);
+        }
         @Override
         public void mouseReleased(MouseEvent e) { }
     }

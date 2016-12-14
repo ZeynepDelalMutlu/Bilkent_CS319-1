@@ -15,6 +15,7 @@ public class HelpPanel extends JPanel {
     private JButton backButton;
     private CanvasView canvasView;
     private JLabel ins;
+    private JLabel helpLabel;
     private Insets insets;
     private Dimension size;
 
@@ -24,18 +25,24 @@ public class HelpPanel extends JPanel {
         setLayout(null);
         insets = super.getInsets();
 
-        backButton = buttonDesigner("Back");
+        backButton = buttonDesigner("Back",30);
         buttonPlacer(backButton,940+ insets.left, 690 + insets.top);
-        ins = textDesigner("Help");
-        textPlacer(ins, 475, 125);
+        ins = textDesigner("Help",40);
+        textPlacer(ins, 470+ insets.left, 80 + insets.top);
+
+        helpLabel = textDesigner("<html>You will start off as a dot in a map, suddenly you start moving.<br> While " +
+                "you are moving you leave patterns behind you. Then by<br> using the keyboard keys of your selection, " +
+        "you can give<br> directions: left and right. The aim of the game is not to cross<br> other players line and " +
+                "be the last one standing. Good Luck!</html>", 25);
+        textPlacer(helpLabel, 200+insets.left, 200+insets.top );
     }
 
-    private JButton buttonDesigner(String text){
+    private JButton buttonDesigner(String text, int size){
         JButton button = new JButton(text);
         button.setBackground(Color.BLACK);
         button.setForeground(Color.WHITE);
         button.setBorder(BorderFactory.createEmptyBorder());
-        button.setFont(font());
+        button.setFont(font(size));
 
         button.addActionListener(new ButtonActionListener());
         button.addMouseListener(new ButtonMouseListener());
@@ -49,9 +56,9 @@ public class HelpPanel extends JPanel {
         add(button);
     }
 
-    private JLabel textDesigner(String text){
+    private JLabel textDesigner(String text,int size){
         JLabel label = new JLabel(text);
-        label.setFont(font());
+        label.setFont(font(size));
         label.setForeground(Color.WHITE);
         return label;
     }
@@ -62,8 +69,8 @@ public class HelpPanel extends JPanel {
         add(label);
     }
 
-    private Font font(){
-        return new Font("Calibri", Font.PLAIN, 30);
+    private Font font(int size){
+        return new Font("Calibri", Font.PLAIN, size);
     }
 
     private class ButtonActionListener implements ActionListener{

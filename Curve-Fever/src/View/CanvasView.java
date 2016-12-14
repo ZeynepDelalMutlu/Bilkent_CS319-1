@@ -11,6 +11,7 @@ public class CanvasView extends JPanel {
     //Instances for View Classes
     private MainMenuPanel mainMenuPanel;
     private PlayerSelectionPanel playerSelectionPanel;
+    private AddPlayerPanel addPlayerPanel;
     private SettingsPanel settingsPanel;
     private CreditsPanel creditsPanel;
     private HelpPanel helpPanel;
@@ -18,6 +19,7 @@ public class CanvasView extends JPanel {
     //Strings for CardLayout: Switching from Panels
     private final String mainMenu = "Main Menu";
     private final String playerSelection = "Player Selection";
+    private final String addPlayer = "Add Player";
     private final String settingsMenu = "Settings Menu";
     private final String creditsMenu = "Credits Menu";
     private final String helpMenu = "Help Menu";
@@ -32,13 +34,15 @@ public class CanvasView extends JPanel {
         //Creates each panel
         mainMenuPanel = new MainMenuPanel(this);
         playerSelectionPanel = new PlayerSelectionPanel(this);
+        addPlayerPanel = new AddPlayerPanel(this);
         settingsPanel = new SettingsPanel(this);
         creditsPanel = new CreditsPanel(this);
         helpPanel = new HelpPanel(this);
 
-        //Puts each panel in cardlayout making switching from panels easier
+        //Puts each panel in CardLayout making switching from panels easier
         super.add(mainMenuPanel, mainMenu);
         super.add(playerSelectionPanel, playerSelection);
+        super.add(addPlayerPanel, addPlayer);
         super.add(settingsPanel, settingsMenu);
         super.add(creditsPanel, creditsMenu);
         super.add(helpPanel, helpMenu);
@@ -58,6 +62,10 @@ public class CanvasView extends JPanel {
      */
     public String getPlay(){
         return playerSelection;
+    }
+
+    public String getAddPlayer(){
+        return addPlayer;
     }
 
     /**

@@ -15,9 +15,11 @@ public class PlayerSelectionPanel extends JPanel {
     private CanvasView canvasView;
     private Insets insets;
     private JButton continueButton;
+    private JButton backButton;
     private JTextField playerField;
     private Dimension size;
     private JLabel q1;
+    private JLabel note;
 
     public PlayerSelectionPanel(CanvasView canvasView){
         this.canvasView = canvasView;
@@ -27,6 +29,9 @@ public class PlayerSelectionPanel extends JPanel {
 
         continueButton = buttonDesigner("Continue");
         buttonPlacer(continueButton, 900+ insets.left, 690 + insets.top);
+
+        backButton = buttonDesigner("Back");
+        buttonPlacer(backButton, 10+insets.left, 690+insets.top);
 
         q1 = textDesigner("Number of Players:", 30);
         textPlacer(q1, 270+ insets.left, 250 + insets.top);
@@ -39,6 +44,9 @@ public class PlayerSelectionPanel extends JPanel {
         size = playerField.getPreferredSize();
         playerField.setBounds(550+ insets.left, 250 + insets.top, size.width, size.height);
         add(playerField);
+
+        note = textDesigner("Note: In order to start the game, at least 2 players are needed", 20);
+        textPlacer(note, 270 + insets.left, 300 + insets.top);
     }
 
     private JButton buttonDesigner(String text){
@@ -80,7 +88,15 @@ public class PlayerSelectionPanel extends JPanel {
     private class ButtonActionListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            //TODO
+            //TODO CONTINUE BUTTON
+            if(e.getSource() == continueButton) {
+                CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
+                cardLayout.show(canvasView, canvasView.getAddPlayer());
+            }
+            if(e.getSource() == backButton){
+                CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
+                cardLayout.show(canvasView, canvasView.getMainMenu());
+            }
         }
     }
 
@@ -89,10 +105,13 @@ public class PlayerSelectionPanel extends JPanel {
         public void mouseEntered(MouseEvent e) {
             if(e.getSource() == continueButton)
                 continueButton.setForeground(new Color(47, 165, 255));
+            if(e.getSource() == backButton)
+                backButton.setForeground(new Color(47, 165, 255));
         }
         @Override
         public void mouseExited(MouseEvent e) {
             continueButton.setForeground(Color.WHITE);
+            backButton.setForeground(Color.WHITE);
         }
         @Override
         public void mouseReleased(MouseEvent e) {}
