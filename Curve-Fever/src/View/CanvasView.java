@@ -1,5 +1,7 @@
 package View;
 
+import Music.MusicPlay;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,6 +17,7 @@ public class CanvasView extends JPanel {
     private SettingsPanel settingsPanel;
     private CreditsPanel creditsPanel;
     private HelpPanel helpPanel;
+    private MusicPlay musicPlay;
 
     //Strings for CardLayout: Switching from Panels
     private final String mainMenu = "Main Menu";
@@ -30,7 +33,7 @@ public class CanvasView extends JPanel {
     public CanvasView(){
 
         super(new CardLayout());
-
+        musicPlay = new MusicPlay();
         //Creates each panel
         mainMenuPanel = new MainMenuPanel(this);
         playerSelectionPanel = new PlayerSelectionPanel(this);
@@ -90,5 +93,9 @@ public class CanvasView extends JPanel {
      */
     public String getCredits(){
         return creditsMenu;
+    }
+
+    public MusicPlay getMusicPlay(){
+        return musicPlay;
     }
 }

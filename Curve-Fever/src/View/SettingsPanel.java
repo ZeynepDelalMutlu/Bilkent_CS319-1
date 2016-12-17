@@ -1,5 +1,7 @@
 package View;
 
+import Music.MusicPlay;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,8 +17,11 @@ public class SettingsPanel extends JPanel {
     private CanvasView canvasView;
     private JButton backButton;
     private JLabel title;
+    private JLabel music;
     private Insets insets;
     private Dimension size;
+
+    private JCheckBox checkMusic;
 
     public SettingsPanel(CanvasView canvasView){
         this.canvasView = canvasView;
@@ -29,6 +34,18 @@ public class SettingsPanel extends JPanel {
 
         title = textDesigner("Settings");
         textPlacer(title, 470+ insets.left, 80 + insets.top);
+
+        music = textDesigner("Music");
+        textPlacer(music, 530 + insets.left, 280 + insets.top);
+
+        checkMusic = new JCheckBox();
+        checkMusic.setBackground(Color.BLACK);
+        checkMusic.setForeground(Color.BLACK);
+        checkMusic.setSelected(true);
+        checkMusic.addActionListener(new ButtonActionListener());
+        size = checkMusic.getPreferredSize();
+        checkMusic.setBounds(500 + insets.left , 285+ insets.top, size.width, size.height );
+        add(checkMusic);
     }
 
     private JButton buttonDesigner(String text){
@@ -75,12 +92,23 @@ public class SettingsPanel extends JPanel {
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
                 cardLayout.show(canvasView, canvasView.getMainMenu());
             }
+            if(e.getSource() == checkMusic){
+                if(!checkMusic.isSelected()) {
+                    canvasView.getMusicPlay().setDisable();
+                }
+                else{
+                    canvasView.getMusicPlay().setEnable();
+
+                }
+            }
         }
+
     }
 
     private class ButtonMouseListener implements MouseListener{
         @Override
-        public void mouseClicked(MouseEvent e) { }
+        public void mouseClicked(MouseEvent e) {
+        }
         @Override
         public void mouseEntered(MouseEvent e) {
             if(e.getSource() == backButton)
