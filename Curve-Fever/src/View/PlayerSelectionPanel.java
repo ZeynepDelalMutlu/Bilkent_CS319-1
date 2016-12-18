@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-/**
- * Created by Baris Poyraz on 13.12.2016.
- */
+
 public class PlayerSelectionPanel extends JPanel {
 
     private CanvasView canvasView;
@@ -20,6 +18,7 @@ public class PlayerSelectionPanel extends JPanel {
     private Dimension size;
     private JLabel q1;
     private JLabel note;
+    private int playerNumber;
 
     public PlayerSelectionPanel(CanvasView canvasView){
         this.canvasView = canvasView;
@@ -36,17 +35,18 @@ public class PlayerSelectionPanel extends JPanel {
         q1 = textDesigner("Number of Players:", 30);
         textPlacer(q1, 270+ insets.left, 250 + insets.top);
 
-        playerField = new JTextField("2", 5);
+        playerField = new JTextField(playerNumber +"", 5);
         playerField.setBorder(BorderFactory.createEmptyBorder());
         playerField.setFont(font(25));
         playerField.setHorizontalAlignment(JTextField.CENTER);
-
         size = playerField.getPreferredSize();
         playerField.setBounds(550+ insets.left, 250 + insets.top, size.width, size.height);
         add(playerField);
 
         note = textDesigner("Note: In order to start the game, at least 2 players are needed", 20);
         textPlacer(note, 270 + insets.left, 300 + insets.top);
+
+
     }
 
     private JButton buttonDesigner(String text){
@@ -85,13 +85,18 @@ public class PlayerSelectionPanel extends JPanel {
         return new Font("Calibri", Font.PLAIN, size);
     }
 
+    public int getPlayerSize(){
+        return playerNumber;
+    }
+
     private class ButtonActionListener implements ActionListener{
-        @Override
+
         public void actionPerformed(ActionEvent e) {
             //TODO CONTINUE BUTTON
             if(e.getSource() == continueButton) {
+                playerNumber = Integer.parseInt(playerField.getText());
                 CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                cardLayout.show(canvasView, canvasView.getAddPlayer());
+                cardLayout.show(canvasView, canvasView.getAddPlayer(""));
             }
             if(e.getSource() == backButton){
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
