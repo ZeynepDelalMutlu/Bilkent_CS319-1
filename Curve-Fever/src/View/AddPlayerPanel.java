@@ -22,14 +22,9 @@ public class AddPlayerPanel extends JPanel {
     private JLabel q1, q2, q3;
     private JLabel header;
     private Color color = Color.RED;
-    private int playerNumber;
-    private int currentPlayerNumber;
-    private String playerName;
 
-    public AddPlayerPanel(int currentPlayerNumber, int playerNumber, CanvasView canvasView){
+    public AddPlayerPanel(CanvasView canvasView){
         this.canvasView = canvasView;
-        this.playerNumber = playerNumber;
-        this.currentPlayerNumber = currentPlayerNumber;
         setBackground(Color.BLACK);
         setLayout(null);
         insets = super.getInsets();
@@ -41,39 +36,28 @@ public class AddPlayerPanel extends JPanel {
         buttonPlacer(backButton, 10+insets.left, 690+insets.top);
 
         // HEADER
-        header = textDesigner(("PLAYER #" + currentPlayerNumber) , 50);
+        header = textDesigner(("PLAYER#" + (canvasView.getCurrentPlayerNumber())) , 50);
         textPlacer(header, 270+ insets.left, 170 + insets.top);
 
         // 3 LABELS: name, color, key
         q1 = textDesigner("Player Name:", 30);
         textPlacer(q1, 270+ insets.left, 250 + insets.top);
-        playerNameField = new JTextField("", 10);
-        playerNameField.setBorder(BorderFactory.createEmptyBorder());
-        playerNameField.setFont(font(25));
-        playerNameField.setHorizontalAlignment(JTextField.CENTER);
-        size = playerNameField.getPreferredSize();
-        playerNameField.setBounds(550+ insets.left, 250 + insets.top, size.width, size.height);
+
+        playerNameField = textFieldCreateAndChecker(550+insets.left, 250+insets.top);
         add(playerNameField);
 
         q2 = textDesigner("Color Selection:", 30);
         textPlacer(q2, 270 + insets.left, 300 + insets.top);
-        //TO DO: burda color selection kodu yazmalıyız.
+
+        //TODO:Color Selection
 
         q3 = textDesigner("Key Configuration:", 30);
         textPlacer(q3, 270 + insets.left, 350 + insets.top);
-        key1 = new JTextField("", 2);
-        key1.setBorder(BorderFactory.createEmptyBorder());
-        key1.setFont(font(25));
-        key1.setHorizontalAlignment(JTextField.CENTER);
-        size = key1.getPreferredSize();
-        key1.setBounds(550+ insets.left, 350 + insets.top, size.width, size.height);
+
+        key1 = textFieldCreateAndChecker(550+ insets.left, 350 + insets.top);
+        key2 = textFieldCreateAndChecker(610+ insets.left, 350 + insets.top);
+
         add(key1);
-        key2 = new JTextField("", 2);
-        key2.setBorder(BorderFactory.createEmptyBorder());
-        key2.setFont(font(25));
-        key2.setHorizontalAlignment(JTextField.CENTER);
-        size = key2.getPreferredSize();
-        key2.setBounds(610+ insets.left, 350 + insets.top, size.width, size.height);
         add(key2);
     }
 
@@ -109,26 +93,36 @@ public class AddPlayerPanel extends JPanel {
         add(label);
     }
 
-    private Font font(int size){
-        return new Font("Calibri", Font.PLAIN, size);
+    private JTextField textFieldCreateAndChecker(int x, int y){
+        JTextField textField = new JTextField("", 2);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.setFont(font(25));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        size = textField.getPreferredSize();
+        textField.setBounds(x, y, size.width, size.height);
+
+        return textField;
     }
 
-    public String getPlayerName(){
-        return playerName;
+    private Font font(int size){
+        return new Font("Calibri", Font.PLAIN, size);
     }
 
     private class ButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //TODO CONTINUE BUTTON
             if(e.getSource() == continueButton) {
-                if(currentPlayerNumber<playerNumber) {
-                    System.out.println("BUTTON");
-                    playerName = playerNameField.getText();
-                    System.out.println("current player number: " +currentPlayerNumber +" addplayer continue basıldı "+ playerName);
+                if(canvasView.getCurrentPlayerNumber()-1 < canvasView.getPlayerNumber()){
+
+                    Player player = new Player(playerNameField.getText());
+
+                    canvasView.getPlayers()[canvasView.getCurrentPlayerNumber()-1] = player;
+                    canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber()+1);
+
+                    header.setText("PLAYER#" + canvasView.getCurrentPlayerNumber());
+
                     CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                    cardLayout.show(canvasView, canvasView.getAddPlayer(playerName));
-                    System.out.println("ÖNEMLİ: player name(after calling nextplayer)" + playerName);
+                    cardLayout.show(canvasView, canvasView.getAddPlayer());
                 }
                 else{
                     CardLayout cardLayout = (CardLayout) (canvasView.getLayout());

@@ -14,10 +14,11 @@ public class CanvasView extends JPanel {
     //Instances for View Classes
     private MainMenuPanel mainMenuPanel;
     private PlayerSelectionPanel playerSelectionPanel;
-    private AddPlayerPanel addPlayerPanel;
+    private static AddPlayerPanel addPlayerPanel;
     private SettingsPanel settingsPanel;
     private CreditsPanel creditsPanel;
     private HelpPanel helpPanel;
+
     private MusicPlay musicPlay;
 
     //Strings for CardLayout: Switching from Panels
@@ -27,9 +28,12 @@ public class CanvasView extends JPanel {
     private final String settingsMenu = "Settings Menu";
     private final String creditsMenu = "Credits Menu";
     private final String helpMenu = "Help Menu";
+
+    public Player[] players;
     private int playerNumber;
     private int currentPlayerNumber = 1;
-    private Player[] players;
+
+
     String currentPlayerName;
 
     //TODO: ADD ALL PANELS IN CANVASVIEW
@@ -43,7 +47,7 @@ public class CanvasView extends JPanel {
         //Creates each panel
         mainMenuPanel = new MainMenuPanel(this);
         playerSelectionPanel = new PlayerSelectionPanel(this);
-        //addPlayerPanel = new AddPlayerPanel(this);
+        addPlayerPanel = new AddPlayerPanel(this);
         settingsPanel = new SettingsPanel(this);
         creditsPanel = new CreditsPanel(this);
         helpPanel = new HelpPanel(this);
@@ -51,10 +55,34 @@ public class CanvasView extends JPanel {
         //Puts each panel in CardLayout making switching from panels easier
         super.add(mainMenuPanel, mainMenu);
         super.add(playerSelectionPanel, playerSelection);
-        //super.add(addPlayerPanel, addPlayer);
+        super.add(addPlayerPanel, addPlayer);
         super.add(settingsPanel, settingsMenu);
         super.add(creditsPanel, creditsMenu);
         super.add(helpPanel, helpMenu);
+    }
+
+    public int getPlayerNumber(){
+        return playerNumber;
+    }
+
+    public void setPlayerNumber(int playerNumber1){
+        playerNumber = playerNumber1;
+    }
+
+    public int getCurrentPlayerNumber(){
+        return currentPlayerNumber;
+    }
+
+    public void setCurrentPlayerNumber(int currentPlayerNumber1){
+        currentPlayerNumber = currentPlayerNumber1;
+    }
+
+    public Player[] getPlayers(){
+        return players;
+    }
+
+    public void setPlayers(Player[] players1){
+        players = players1;
     }
 
     /**
@@ -74,33 +102,7 @@ public class CanvasView extends JPanel {
     }
 
     public String getAddPlayer(){
-        playerNumber = playerSelectionPanel.getPlayerSize();
-        addPlayerPanel = new AddPlayerPanel( currentPlayerNumber, playerNumber, this);
-        super.add(addPlayerPanel, addPlayer);
-        return addPlayer;
-    }
 
-    public String getAddPlayer(String currentPlayerName){
-        System.out.println("CANVAS");
-        this.currentPlayerName = currentPlayerName;
-        playerNumber = playerSelectionPanel.getPlayerSize();
-        addPlayerPanel = new AddPlayerPanel( currentPlayerNumber, playerNumber, this);
-        super.add(addPlayerPanel, addPlayer);
-        System.out.println(playerNumber + " canvastayım " + currentPlayerNumber);
-        if(currentPlayerNumber == 1){
-            players = new Player[playerNumber];
-            players[currentPlayerNumber] = new Player(currentPlayerName);
-            System.out.println("BURADAYIM currentplayer=1");
-            //(players[currentPlayerNumber]).toString();
-            System.out.println("canvasta birinci player if'indeki name: " +currentPlayerName);
-        }
-        /*else{
-            players[currentPlayerNumber] = new Player(currentPlayerName);
-            System.out.println("ASLINDA BURADAYIM");
-            players[currentPlayerNumber].toString();
-        }*/
-        //System.out.println("canvastaki en alt yer: "+currentPlayerName);
-        currentPlayerNumber++;
         return addPlayer;
     }
 

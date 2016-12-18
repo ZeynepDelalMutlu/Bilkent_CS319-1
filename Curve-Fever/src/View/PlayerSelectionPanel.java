@@ -1,5 +1,7 @@
 package View;
 
+import Model.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,9 +22,8 @@ public class PlayerSelectionPanel extends JPanel {
     private Dimension size;
     private JLabel q1;
     private JLabel note;
-    private int playerNumber;
 
-    public static int noOfPlayers = 0;
+    private Player[] p;
 
     public PlayerSelectionPanel(CanvasView canvasView){
         this.canvasView = canvasView;
@@ -39,10 +40,12 @@ public class PlayerSelectionPanel extends JPanel {
         q1 = textDesigner("Number of Players:", 30);
         textPlacer(q1, 270+ insets.left, 250 + insets.top);
 
-        textFieldCreateAndChecker(playerField);
+        playerField = textFieldCreateAndChecker();
+        add(playerField);
 
         note = textDesigner("Note: In order to start the game, at least 2 players are needed", 20);
         textPlacer(note, 270 + insets.left, 300 + insets.top);
+
     }
 
     private JButton buttonDesigner(String text){
@@ -77,33 +80,33 @@ public class PlayerSelectionPanel extends JPanel {
         add(label);
     }
 
-    private void textFieldCreateAndChecker(JTextField textField){
-        textField = new JTextField("2", 5);
+    private JTextField textFieldCreateAndChecker(){
+        JTextField textField = new JTextField("2", 5);
         textField.setBorder(BorderFactory.createEmptyBorder());
         textField.setFont(font(25));
         textField.setHorizontalAlignment(JTextField.CENTER);
 
         size = textField.getPreferredSize();
         textField.setBounds(550+ insets.left, 250 + insets.top, size.width, size.height);
-        add(textField);
+
+        return textField;
     }
 
     private Font font(int size){
         return new Font("Calibri", Font.PLAIN, size);
     }
 
-    public int getPlayerSize(){
-        return playerNumber;
-    }
-
     private class ButtonActionListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            //TODO CONTINUE BUTTON
             if(e.getSource() == continueButton) {
-                playerNumber = Integer.parseInt(playerField.getText());
+
+                canvasView.setPlayerNumber(Integer.parseInt(playerField.getText()));
+                p = new Player[canvasView.getPlayerNumber()];
+                canvasView.setPlayers(p);
+
                 CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                cardLayout.show(canvasView, canvasView.getAddPlayer(""));
+                cardLayout.show(canvasView, canvasView.getAddPlayer());
             }
             if(e.getSource() == backButton){
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
