@@ -122,18 +122,18 @@ public class AddPlayerPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             //TODO CONTINUE BUTTON
             if(e.getSource() == continueButton) {
-               if(currentPlayerNumber<playerNumber) {
-                   System.out.println("BUTTON");
-                   playerName = playerNameField.getText();
-                   System.out.println("current player number: " +currentPlayerNumber +" addplayer continue basıldı "+ playerName);
-                   CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                   cardLayout.show(canvasView, canvasView.getAddPlayer(playerName));
-                   System.out.println("ÖNEMLİ: player name(after calling nextplayer)" + playerName);
-               }
-               else{
-                   CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                   cardLayout.show(canvasView, canvasView.getMainMenu());
-               }
+                if(currentPlayerNumber<playerNumber) {
+                    System.out.println("BUTTON");
+                    playerName = playerNameField.getText();
+                    System.out.println("current player number: " +currentPlayerNumber +" addplayer continue basıldı "+ playerName);
+                    CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
+                    cardLayout.show(canvasView, canvasView.getAddPlayer(playerName));
+                    System.out.println("ÖNEMLİ: player name(after calling nextplayer)" + playerName);
+                }
+                else{
+                    CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
+                    cardLayout.show(canvasView, canvasView.getMainMenu());
+                }
             }
             if(e.getSource() == backButton){
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
