@@ -112,11 +112,12 @@ public class AddPlayerPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == continueButton) {
-                if(canvasView.getCurrentPlayerNumber()-1 < canvasView.getPlayerNumber()){
+
+                if(canvasView.getCurrentPlayerNumber() < canvasView.getPlayerNumber()){
 
                     Player player = new Player(playerNameField.getText());
 
-                    canvasView.getPlayers()[canvasView.getCurrentPlayerNumber()-1] = player;
+                    canvasView.setPlayer(player);
                     canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber()+1);
 
                     header.setText("PLAYER#" + canvasView.getCurrentPlayerNumber());
@@ -125,8 +126,14 @@ public class AddPlayerPanel extends JPanel {
                     cardLayout.show(canvasView, canvasView.getAddPlayer());
                 }
                 else{
+
+                    Player player = new Player(playerNameField.getText());
+
+                    canvasView.setPlayer(player);
+                    canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber()+1);
+
                     CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                    cardLayout.show(canvasView, canvasView.getMainMenu());
+                    cardLayout.show(canvasView, canvasView.getPlayerScreen());
                 }
             }
             if(e.getSource() == backButton){
