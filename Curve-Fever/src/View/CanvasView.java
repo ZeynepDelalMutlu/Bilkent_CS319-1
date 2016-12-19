@@ -1,7 +1,7 @@
 package View;
 
 import Model.Player;
-//import Music.MusicPlay;
+import Music.MusicPlay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +19,9 @@ public class CanvasView extends JPanel {
     private CreditsPanel creditsPanel;
     private HelpPanel helpPanel;
     private PlayerScreenPanel playerScreenPanel;
-    private RemovePlayerPanel removePlayerPanel;
+    private GamePanel gamePanel;
 
-   // private MusicPlay musicPlay;
+    private MusicPlay musicPlay;
 
     //Strings for CardLayout: Switching from Panels
     private final String mainMenu = "Main Menu";
@@ -31,7 +31,7 @@ public class CanvasView extends JPanel {
     private final String creditsMenu = "Credits Menu";
     private final String helpMenu = "Help Menu";
     private final String playerScreen = "Player Screen";
-    private final String removePlayer = "Remove Player";
+    private final String gamePanelStr  = "Gameplay";
 
     public Player[] players;
     private Player player;
@@ -47,7 +47,7 @@ public class CanvasView extends JPanel {
     public CanvasView(){
 
         super(new CardLayout());
-        //musicPlay = new MusicPlay();
+        musicPlay = new MusicPlay();
 
         //Creates each panel
         mainMenuPanel = new MainMenuPanel(this);
@@ -56,8 +56,8 @@ public class CanvasView extends JPanel {
         settingsPanel = new SettingsPanel(this);
         creditsPanel = new CreditsPanel(this);
         helpPanel = new HelpPanel(this);
-        //playerScreenPanel = new PlayerScreenPanel(this);
-        removePlayerPanel = new RemovePlayerPanel(this);
+        playerScreenPanel = new PlayerScreenPanel(this);
+        gamePanel = new GamePanel(this);
 
         //Puts each panel in CardLayout making switching from panels easier
         super.add(mainMenuPanel, mainMenu);
@@ -66,8 +66,8 @@ public class CanvasView extends JPanel {
         super.add(settingsPanel, settingsMenu);
         super.add(creditsPanel, creditsMenu);
         super.add(helpPanel, helpMenu);
-        super.add(removePlayerPanel, removePlayer);
-        //super.add(playerScreenPanel, playerScreen);
+        super.add(playerScreenPanel, playerScreen);
+        super.add(gamePanel, gamePanelStr);
     }
 
     public int getPlayerNumber(){
@@ -76,7 +76,6 @@ public class CanvasView extends JPanel {
 
     public void setPlayerNumber(int playerNumber1){
         playerNumber = playerNumber1;
-        //playerScreenPanel.setPlayerNumber(playerNumber);
     }
 
     public int getCurrentPlayerNumber(){
@@ -92,7 +91,6 @@ public class CanvasView extends JPanel {
     }
 
     public void setPlayers(Player[] players1){
-       // players = new Player[playerNumber];
         players = players1;
     }
 
@@ -102,9 +100,8 @@ public class CanvasView extends JPanel {
 
     public void setPlayer(Player p){
         player = p;
-        players[getCurrentPlayerNumber()-1] =player;
+        players[getCurrentPlayerNumber()-1] = player;
     }
-
     /**
      * Main Menu Panel String for CardLayout
      * @return mainMenu Key String for CardLayout
@@ -150,19 +147,20 @@ public class CanvasView extends JPanel {
         return creditsMenu;
     }
 
-    public String getRemovePlayer(){
-        return removePlayer;
-    }
-
     public String getPlayerScreen(){
         playerScreenPanel = new PlayerScreenPanel(this);
         super.add(playerScreenPanel, playerScreen);
-        //playerScreenPanel.setPlayerNumber(playerNumber);
-        System.out.println(playerNumber + "canvas methodu");
         return playerScreen;
     }
 
-    //public MusicPlay getMusicPlay(){
-      //  return musicPlay;
-    //}
+    public String getGamePanel(){
+        gamePanel = new GamePanel(this);
+        super.add(gamePanel, gamePanelStr);
+        return gamePanelStr;
+    }
+
+    public MusicPlay getMusicPlay(){
+        return musicPlay;
+    }
+
 }

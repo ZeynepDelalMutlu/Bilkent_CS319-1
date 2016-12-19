@@ -29,7 +29,7 @@ public class PlayerScreenPanel extends JPanel{
     public PlayerScreenPanel( CanvasView canvasView ){
         this.canvasView = canvasView;
         setPlayerNumber(canvasView.getPlayerNumber());
-        System.out.println(playerNumber + " playerscreen");
+
         setBackground(Color.BLACK);
         setLayout(null);
         insets = super.getInsets();
@@ -102,18 +102,17 @@ public class PlayerScreenPanel extends JPanel{
         return new Font("Calibri", Font.PLAIN, size);
     }
 
-
     private class ButtonActionListener implements ActionListener{
 
         public void actionPerformed(ActionEvent e) {
             //TODO CONTINUE BUTTON
             if(e.getSource() == removeButton) {
                 CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                cardLayout.show(canvasView, canvasView.getRemovePlayer());
+                //cardLayout.show(canvasView, canvasView.getRemovePlayer());
             }
             if(e.getSource() == startButton){
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
-                cardLayout.show(canvasView, canvasView.getMainMenu());
+                cardLayout.show(canvasView, canvasView.getGamePanel());
             }
         }
     }
