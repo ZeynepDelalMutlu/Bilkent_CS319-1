@@ -1,7 +1,7 @@
 package View;
 
 import Model.Player;
-import Music.MusicPlay;
+//import Music.MusicPlay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +19,9 @@ public class CanvasView extends JPanel {
     private CreditsPanel creditsPanel;
     private HelpPanel helpPanel;
     private PlayerScreenPanel playerScreenPanel;
-    private GamePanel gamePanel;
+    private RemovePlayerPanel removePlayerPanel;
 
-    private MusicPlay musicPlay;
+   // private MusicPlay musicPlay;
 
     //Strings for CardLayout: Switching from Panels
     private final String mainMenu = "Main Menu";
@@ -31,15 +31,14 @@ public class CanvasView extends JPanel {
     private final String creditsMenu = "Credits Menu";
     private final String helpMenu = "Help Menu";
     private final String playerScreen = "Player Screen";
-    private final String gamePanelStr  = "Gameplay";
+    private final String removePlayer = "Remove Player";
 
     public Player[] players;
     private Player player;
     private int playerNumber;
     private int currentPlayerNumber = 1;
+    private int indexRemovePlayer = -1;
 
-
-    String currentPlayerName;
 
     //TODO: ADD ALL PANELS IN CANVASVIEW
 
@@ -47,7 +46,7 @@ public class CanvasView extends JPanel {
     public CanvasView(){
 
         super(new CardLayout());
-        musicPlay = new MusicPlay();
+        //musicPlay = new MusicPlay();
 
         //Creates each panel
         mainMenuPanel = new MainMenuPanel(this);
@@ -56,8 +55,6 @@ public class CanvasView extends JPanel {
         settingsPanel = new SettingsPanel(this);
         creditsPanel = new CreditsPanel(this);
         helpPanel = new HelpPanel(this);
-        playerScreenPanel = new PlayerScreenPanel(this);
-        gamePanel = new GamePanel(this);
 
         //Puts each panel in CardLayout making switching from panels easier
         super.add(mainMenuPanel, mainMenu);
@@ -66,8 +63,15 @@ public class CanvasView extends JPanel {
         super.add(settingsPanel, settingsMenu);
         super.add(creditsPanel, creditsMenu);
         super.add(helpPanel, helpMenu);
-        super.add(playerScreenPanel, playerScreen);
-        super.add(gamePanel, gamePanelStr);
+    }
+
+    public void removePlayer(){
+        for(int i = 0; i< playerNumber; i++)
+            System.out.println("şu an bulunan player isimleri: " + players[i].getName());
+        players[indexRemovePlayer] = null;
+        System.out.println("remove ettim");
+        for(int i = 0; i< playerNumber; i++);
+            //System.out.println("şu an bulunan player isimleri: " + players[i].getName());
     }
 
     public int getPlayerNumber(){
@@ -76,6 +80,7 @@ public class CanvasView extends JPanel {
 
     public void setPlayerNumber(int playerNumber1){
         playerNumber = playerNumber1;
+        //playerScreenPanel.setPlayerNumber(playerNumber);
     }
 
     public int getCurrentPlayerNumber(){
@@ -91,6 +96,7 @@ public class CanvasView extends JPanel {
     }
 
     public void setPlayers(Player[] players1){
+       // players = new Player[playerNumber];
         players = players1;
     }
 
@@ -100,8 +106,18 @@ public class CanvasView extends JPanel {
 
     public void setPlayer(Player p){
         player = p;
-        players[getCurrentPlayerNumber()-1] = player;
+        players[getCurrentPlayerNumber()-1] =player;
     }
+
+    public void setIndexRemovePlayer(int indexRemovePlayer){
+        this.indexRemovePlayer = indexRemovePlayer;
+        System.out.println("canvasta removeIndex i set ettim: " + indexRemovePlayer);
+    }
+
+    public int getIndexRemovePlayer(){
+        return indexRemovePlayer;
+    }
+
     /**
      * Main Menu Panel String for CardLayout
      * @return mainMenu Key String for CardLayout
@@ -119,7 +135,7 @@ public class CanvasView extends JPanel {
     }
 
     public String getAddPlayer(){
-
+        addPlayerPanel.setRemoveIndex(indexRemovePlayer);
         return addPlayer;
     }
 
@@ -147,20 +163,19 @@ public class CanvasView extends JPanel {
         return creditsMenu;
     }
 
+    public String getRemovePlayer(){
+        removePlayerPanel = new RemovePlayerPanel(this);
+        super.add(removePlayerPanel, removePlayer);
+        return removePlayer;
+    }
+
     public String getPlayerScreen(){
         playerScreenPanel = new PlayerScreenPanel(this);
         super.add(playerScreenPanel, playerScreen);
         return playerScreen;
     }
 
-    public String getGamePanel(){
-        gamePanel = new GamePanel(this);
-        super.add(gamePanel, gamePanelStr);
-        return gamePanelStr;
-    }
-
-    public MusicPlay getMusicPlay(){
-        return musicPlay;
-    }
-
+    //public MusicPlay getMusicPlay(){
+      //  return musicPlay;
+    //}
 }

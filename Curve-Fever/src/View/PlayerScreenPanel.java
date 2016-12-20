@@ -23,30 +23,28 @@ public class PlayerScreenPanel extends JPanel{
     private JLabel nameLabel, colorLebel, keyLabel;
     private int playerNumber;
     private Player[] players;
-    private int startingXCoordinate;
-    private int startingYCoordinate;
 
     public PlayerScreenPanel( CanvasView canvasView ){
         this.canvasView = canvasView;
-        setPlayerNumber(canvasView.getPlayerNumber());
+        int startingXCoordinate = 200;
+        int startingYCoordinate = 100;
 
         setBackground(Color.BLACK);
         setLayout(null);
         insets = super.getInsets();
 
-        startButton = buttonDesigner("Start");
-        buttonPlacer(startButton, 900+ insets.left, 690 + insets.top);
-
-        removeButton = buttonDesigner("Remove Player");
-        buttonPlacer(removeButton, 10+insets.left, 690+insets.top);
-
+        setPlayerNumber(canvasView.getPlayerNumber());
         players = new Player[playerNumber];
         players =  canvasView.getPlayers();
 
-        startingXCoordinate = 200;
-        startingYCoordinate = 100;
+        // BUTTONs: startButton and removeButton
+        startButton = buttonDesigner("Start");
+        buttonPlacer(startButton, 900+ insets.left, 690 + insets.top);
+        removeButton = buttonDesigner("Remove Player");
+        buttonPlacer(removeButton, 10+insets.left, 690+insets.top);
 
         for(int i = 0; i<playerNumber; i++){
+            //TODO: color and key labels have to be designed.
             // 3 LABELS: name, color, key
             nameLabel = textDesigner("Name:\t\t" + players[i].getName(), 20);
             textPlacer(nameLabel, startingXCoordinate + insets.left, (startingYCoordinate + 30+(30*(i+1)))  + insets.top);
@@ -102,17 +100,19 @@ public class PlayerScreenPanel extends JPanel{
         return new Font("Calibri", Font.PLAIN, size);
     }
 
+
     private class ButtonActionListener implements ActionListener{
 
         public void actionPerformed(ActionEvent e) {
             //TODO CONTINUE BUTTON
             if(e.getSource() == removeButton) {
+                players = null;
                 CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                //cardLayout.show(canvasView, canvasView.getRemovePlayer());
+                cardLayout.show(canvasView, canvasView.getRemovePlayer());
             }
             if(e.getSource() == startButton){
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
-                cardLayout.show(canvasView, canvasView.getGamePanel());
+                cardLayout.show(canvasView, canvasView.getMainMenu());
             }
         }
     }

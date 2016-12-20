@@ -17,12 +17,14 @@ public class AddPlayerPanel extends JPanel {
     private JButton continueButton;
     private JButton backButton;
     private JTextField playerNameField, key1, key2;
-    private JTextField r, g, b;
-    private JComboBox colorSelection;
+    //private JComboBox colorSelection;
+    //private Color color = Color.RED;
     private Dimension size;
     private JLabel q1, q2, q3;
     private JLabel header;
-    private Color color = Color.RED;
+
+    private int indexShouldCreateNewPlayer = -1;
+    private int tempIndex;
 
     public AddPlayerPanel(CanvasView canvasView){
         this.canvasView = canvasView;
@@ -36,36 +38,49 @@ public class AddPlayerPanel extends JPanel {
         backButton = buttonDesigner("Back");
         buttonPlacer(backButton, 10+insets.left, 690+insets.top);
 
+        // This block indicates which player should created again.
+        //indexShouldCreateNewPlayer = canvasView.getIndexRemovePlayer();
+        System.out.println("addplayer'a hangi playerı silmek isteyeceğim gerçekten geldi mi: " + indexShouldCreateNewPlayer);
+        tempIndex = canvasView.getCurrentPlayerNumber()-1;
+        if(indexShouldCreateNewPlayer >= 0){
+            canvasView.setCurrentPlayerNumber(indexShouldCreateNewPlayer + 1);
+        }
+
         // HEADER
-        header = textDesigner(("PLAYER#" + (canvasView.getCurrentPlayerNumber())) , 45);
-        textPlacer(header, 200+ insets.left, 140 + insets.top);
+        header = textDesigner(("PLAYER#" + (canvasView.getCurrentPlayerNumber())) , 50);
+        textPlacer(header, 270+ insets.left, 170 + insets.top);
 
         // 3 LABELS: name, color, key
         q1 = textDesigner("Player Name:", 30);
-        textPlacer(q1, 200+ insets.left, 250 + insets.top);
+        textPlacer(q1, 270+ insets.left, 250 + insets.top);
 
-        playerNameField = textFieldCreateAndChecker(550+insets.left, 250+insets.top, 10);
+        playerNameField = textFieldCreateAndChecker(550+insets.left, 250+insets.top);
         add(playerNameField);
 
         q2 = textDesigner("Color Selection:", 30);
-        textPlacer(q2, 200 + insets.left, 300 + insets.top);
+        textPlacer(q2, 270 + insets.left, 300 + insets.top);
 
         //TODO:Color Selection
 
         q3 = textDesigner("Key Configuration:", 30);
-        textPlacer(q3, 200 + insets.left, 350 + insets.top);
+        textPlacer(q3, 270 + insets.left, 350 + insets.top);
 
-        key1 = textFieldCreateAndChecker(550+ insets.left, 350 + insets.top, 3);
-        key2 = textFieldCreateAndChecker(650+ insets.left, 350 + insets.top, 3);
-        r = textFieldCreateAndChecker(550+insets.left, 300 + insets.top, 3);
-        g = textFieldCreateAndChecker(650+insets.left, 300 + insets.top, 3);
-        b = textFieldCreateAndChecker(750+insets.left, 300 + insets.top, 3);
+        key1 = textFieldCreateAndChecker(550+ insets.left, 350 + insets.top);
+        key2 = textFieldCreateAndChecker(610+ insets.left, 350 + insets.top);
 
         add(key1);
         add(key2);
-        add(r);
-        add(g);
-        add(b);
+
+        // Set currentPlayerNumber real version.
+        // That's why we decide panels with respect to currentPlayerNumber real version.
+        // Therefore, this block has to be at the end of the constructor.
+        if(indexShouldCreateNewPlayer >= 0){
+            canvasView.setCurrentPlayerNumber(tempIndex + 1);
+        }
+    }
+
+    public void setRemoveIndex(int indexShouldCreateNewPlayer){
+        this.indexShouldCreateNewPlayer = indexShouldCreateNewPlayer;
     }
 
     private JButton buttonDesigner(String text){
@@ -100,8 +115,8 @@ public class AddPlayerPanel extends JPanel {
         add(label);
     }
 
-    private JTextField textFieldCreateAndChecker(int x, int y, int columns){
-        JTextField textField = new JTextField("", columns);
+    private JTextField textFieldCreateAndChecker(int x, int y){
+        JTextField textField = new JTextField("", 2);
         textField.setBorder(BorderFactory.createEmptyBorder());
         textField.setFont(font(25));
         textField.setHorizontalAlignment(JTextField.CENTER);
@@ -119,29 +134,50 @@ public class AddPlayerPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == continueButton) {
-                if(canvasView.getCurrentPlayerNumber() < canvasView.getPlayerNumber()){
+                if(canvasView.getCurrentPlayerNumber() < canvasView.getPlayerNumber() && indexShouldCreateNewPlayer < 0){
 
                     Player player = new Player(playerNameField.getText());
+
                     canvasView.setPlayer(player);
                     canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber()+1);
 
                     header.setText("PLAYER#" + canvasView.getCurrentPlayerNumber());
+                    playerNameField.setText("");
+                    key1.setText("");
+                    key2.setText("");
 
                     CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
                     cardLayout.show(canvasView, canvasView.getAddPlayer());
                 }
-                else{
 
+                else if(canvasView.getCurrentPlayerNumber() >= canvasView.getPlayerNumber()&& indexShouldCreateNewPlayer < 0){
                     Player player = new Player(playerNameField.getText());
-                    canvasView.setPlayer(player);
-                    canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber()+1);
 
-                    for(int i = 0; i < canvasView.getPlayers().length; i++){
-                        System.out.println(canvasView.getPlayers()[i]);
-                    }
+                    canvasView.setPlayer(player);
+                    canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber() + 1);
+                    playerNameField.setText("");
+                    key1.setText("");
+                    key2.setText("");
 
                     CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                        cardLayout.show(canvasView, canvasView.getPlayerScreen());
+                    cardLayout.show(canvasView, canvasView.getPlayerScreen());
+                }
+
+                else{
+                    Player player = new Player(playerNameField.getText());
+
+                    // setPlayer(player) method is working with currentPlayerNumber,
+                    // That's why we changes currentPlayerNumber.
+                    int tempIndex = canvasView.getCurrentPlayerNumber()-1;
+                    canvasView.setCurrentPlayerNumber(indexShouldCreateNewPlayer+1);
+                    canvasView.setPlayer(player);
+                    canvasView.setCurrentPlayerNumber(tempIndex+1);
+
+                    indexShouldCreateNewPlayer = -1;
+
+                    CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
+                    cardLayout.show(canvasView, canvasView.getPlayerScreen());
+
                 }
             }
             if(e.getSource() == backButton){
