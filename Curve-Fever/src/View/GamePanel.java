@@ -84,7 +84,7 @@ public class GamePanel extends JPanel {
         panel.setBounds(256 ,0 , 762, 732 );
         add(panel);
     }
-    
+
     private Font font(int size){
         return new Font("Calibri", Font.PLAIN, size);
     }

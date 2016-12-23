@@ -56,20 +56,20 @@ public class RemovePlayerPanel extends JPanel {
     }
 
     public void setPlayerNumber(int playerNumber){
-            this.playerNumber = playerNumber;
-        }
+        this.playerNumber = playerNumber;
+    }
 
     public int getPlayerSize(){
-            return playerNumber;
-        }
+        return playerNumber;
+    }
 
     public void setIndexRemovePlayer(int indexRemovePlayer){
-            this.indexRemovePlayer = indexRemovePlayer;
-        }
+        this.indexRemovePlayer = indexRemovePlayer;
+    }
 
     public int getIndexRemovePlayer(){
-            return indexRemovePlayer;
-        }
+        return indexRemovePlayer;
+    }
 
     private JButton exitButtonDesigner (String text) {
         JButton button = new JButton(text);
@@ -122,8 +122,8 @@ public class RemovePlayerPanel extends JPanel {
     }
 
     private Font font(int size){
-            return new Font("Calibri", Font.PLAIN, size);
-        }
+        return new Font("Calibri", Font.PLAIN, size);
+    }
 
     private class ButtonActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -158,8 +158,8 @@ public class RemovePlayerPanel extends JPanel {
         }
         @Override
         public void mouseExited(MouseEvent e) {
-                backButton.setForeground(Color.WHITE);
-            }
+            backButton.setForeground(Color.WHITE);
+        }
         @Override
         public void mouseReleased(MouseEvent e) {}
         @Override
@@ -168,4 +168,3 @@ public class RemovePlayerPanel extends JPanel {
         public void mouseClicked(MouseEvent e) {}
     }
 }
-

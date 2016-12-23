@@ -101,12 +101,27 @@ public class PlayerSelectionPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == continueButton) {
 
-                canvasView.setPlayerNumber(Integer.parseInt(playerField.getText()));
-                p = new Player[canvasView.getPlayerNumber()];
-                canvasView.setPlayers(p);
+                try{
+                    canvasView.setPlayerNumber(Integer.parseInt(playerField.getText()));
 
-                CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                cardLayout.show(canvasView, canvasView.getAddPlayer());
+                    if(Integer.parseInt(playerField.getText()) < 2){
+                        throw new IllegalArgumentException("");
+                    }
+                    p = new Player[canvasView.getPlayerNumber()];
+                    canvasView.setPlayers(p);
+
+                    CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
+                    cardLayout.show(canvasView, canvasView.getAddPlayer());
+
+                }catch (NumberFormatException ex){
+                    JOptionPane.showMessageDialog(canvasView,"Enter a number that is at least 2");
+                }
+                catch (IllegalArgumentException ex){
+                    JOptionPane.showMessageDialog(canvasView, "Enter a number that is at least 2");
+
+                }
+
+
             }
             if(e.getSource() == backButton){
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());

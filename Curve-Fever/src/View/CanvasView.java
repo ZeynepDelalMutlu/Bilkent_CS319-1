@@ -1,6 +1,7 @@
 package View;
 
 import Model.Player;
+import Music.MusicPlay;
 //import Music.MusicPlay;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class CanvasView extends JPanel {
     private PlayerScreenPanel playerScreenPanel;
     private RemovePlayerPanel removePlayerPanel;
 
-   // private MusicPlay musicPlay;
+    private MusicPlay musicPlay;
 
     //Strings for CardLayout: Switching from Panels
     private final String mainMenu = "Main Menu";
@@ -66,12 +67,7 @@ public class CanvasView extends JPanel {
     }
 
     public void removePlayer(){
-        for(int i = 0; i< playerNumber; i++)
-            System.out.println("şu an bulunan player isimleri: " + players[i].getName());
         players[indexRemovePlayer] = null;
-        System.out.println("remove ettim");
-        for(int i = 0; i< playerNumber; i++);
-            //System.out.println("şu an bulunan player isimleri: " + players[i].getName());
     }
 
     public int getPlayerNumber(){
@@ -80,7 +76,6 @@ public class CanvasView extends JPanel {
 
     public void setPlayerNumber(int playerNumber1){
         playerNumber = playerNumber1;
-        //playerScreenPanel.setPlayerNumber(playerNumber);
     }
 
     public int getCurrentPlayerNumber(){
@@ -96,7 +91,6 @@ public class CanvasView extends JPanel {
     }
 
     public void setPlayers(Player[] players1){
-       // players = new Player[playerNumber];
         players = players1;
     }
 
@@ -175,7 +169,7 @@ public class CanvasView extends JPanel {
         return playerScreen;
     }
 
-    //public MusicPlay getMusicPlay(){
-      //  return musicPlay;
-    //}
+    public MusicPlay getMusicPlay(){
+      return musicPlay;
+    }
 }
