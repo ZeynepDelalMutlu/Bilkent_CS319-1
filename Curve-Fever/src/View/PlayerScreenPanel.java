@@ -20,7 +20,7 @@ public class PlayerScreenPanel extends JPanel{
     private JButton startButton;
     private Dimension size;
     private JLabel playerLabel;
-    private JLabel nameLabel, colorLebel, keyLabel;
+    private JLabel nameLabel, colorLabel, keyLabel;
     private int playerNumber;
     private Player[] players;
 
@@ -49,16 +49,15 @@ public class PlayerScreenPanel extends JPanel{
             nameLabel = textDesigner("Name:\t\t" + players[i].getName(), 20);
             textPlacer(nameLabel, startingXCoordinate + insets.left, (startingYCoordinate + 30+(30*(i+1)))  + insets.top);
 
-            colorLebel = textDesigner("Color Selection:" + players[i].getName(), 20);
-            textPlacer(colorLebel, startingXCoordinate + insets.left, (startingYCoordinate + 30+(30*(i+2))) + insets.top);
+            colorLabel = textDesigner("Color Selection", 20);
+            textPlacer(colorLabel, startingXCoordinate + insets.left, (startingYCoordinate + 30+(30*(i+2))) + insets.top);
+            colorLabel.setForeground(players[i].getColor());
 
-            keyLabel = textDesigner("Key Configuration:" + players[i].getName(), 20);
+            keyLabel = textDesigner("Key Configuration: " + players[i].getLeftKeyString() + ", " + players[i].getRightKeyString(), 20);
             textPlacer(keyLabel, startingXCoordinate + insets.left, (startingYCoordinate + 30+(30*(i+3))) + insets.top);
 
             startingYCoordinate = startingYCoordinate + 30+(30*(i+3));
-
         }
-
     }
 
     public void setPlayerNumber(int playerNumber){

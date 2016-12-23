@@ -118,10 +118,7 @@ public class PlayerSelectionPanel extends JPanel {
                 }
                 catch (IllegalArgumentException ex){
                     JOptionPane.showMessageDialog(canvasView, "Enter a number that is at least 2");
-
                 }
-
-
             }
             if(e.getSource() == backButton){
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());

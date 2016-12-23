@@ -28,6 +28,9 @@ public class AddPlayerPanel extends JPanel {
     private int keyL;
     private int keyR;
 
+    private char keyLeft;
+    private char keyRight;
+
     private Color color;
 
     private int indexShouldCreateNewPlayer = -1;
@@ -160,6 +163,9 @@ public class AddPlayerPanel extends JPanel {
                     if(playerInfoChecker()) {
                         Player player = new Player(name, keyL, keyR, color);
 
+                        player.setLeftKeyString(keyLeft);
+                        player.setRightKeyString(keyRight);
+
                         canvasView.setPlayer(player);
                         canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber() + 1);
 
@@ -177,6 +183,9 @@ public class AddPlayerPanel extends JPanel {
                 else if(canvasView.getCurrentPlayerNumber() >= canvasView.getPlayerNumber()&& indexShouldCreateNewPlayer < 0){
                     Player player = new Player(name, keyL, keyR, color);
 
+                    player.setLeftKeyString(keyLeft);
+                    player.setRightKeyString(keyRight);
+
                     canvasView.setPlayer(player);
                     canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber() + 1);
                     playerNameField.setText("");
@@ -190,6 +199,9 @@ public class AddPlayerPanel extends JPanel {
 
                 else{
                     Player player = new Player(name, keyL, keyR, color);
+
+                    player.setLeftKeyString(keyLeft);
+                    player.setRightKeyString(keyRight);
 
                     // setPlayer(player) method is working with currentPlayerNumber,
                     // That's why we change currentPlayerNumber.
@@ -290,6 +302,7 @@ public class AddPlayerPanel extends JPanel {
             if(e.getSource() == key1) {
                 if (id == KeyEvent.KEY_TYPED) {
                     char c = e.getKeyChar();
+                    keyLeft = c;
                     keyString = "key character = " + c + " :=)";
                     System.out.println(keyString);
                 } else {
@@ -303,6 +316,7 @@ public class AddPlayerPanel extends JPanel {
             if(e.getSource() == key2) {
                 if (id == KeyEvent.KEY_TYPED) {
                     char c = e.getKeyChar();
+                    keyRight = c;
                     keyString = "key character = " + c + " :=)";
                     System.out.println(keyString);
                 } else {
@@ -313,7 +327,6 @@ public class AddPlayerPanel extends JPanel {
                     System.out.println(keyR);
                 }
             }
-
         }
     }
 }
