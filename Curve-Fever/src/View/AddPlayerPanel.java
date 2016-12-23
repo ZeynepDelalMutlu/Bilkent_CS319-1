@@ -6,11 +6,9 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.Color;
+import java.security.Key;
 
 public class AddPlayerPanel extends JPanel {
 
@@ -20,8 +18,8 @@ public class AddPlayerPanel extends JPanel {
     private JButton backButton;
     private JButton colorButton;
     private JTextField playerNameField, key1, key2;
-    //private JComboBox colorSelection;
-    //private Color color = Color.RED;
+
+
     private Dimension size;
     private JLabel q1, q2, q3;
     private JLabel header;
@@ -31,8 +29,6 @@ public class AddPlayerPanel extends JPanel {
     private int keyR;
 
     private Color color;
-
-    private JColorChooser jColorChooser;
 
     private int indexShouldCreateNewPlayer = -1;
     private int tempIndex;
@@ -76,6 +72,9 @@ public class AddPlayerPanel extends JPanel {
 
         key1 = textFieldCreateAndChecker(550+ insets.left, 350 + insets.top, 2);
         key2 = textFieldCreateAndChecker(610+ insets.left, 350 + insets.top, 2);
+
+        key1.addKeyListener(new KeyInputListener());
+        key2.addKeyListener(new KeyInputListener());
 
         add(key1);
         add(key2);
@@ -158,23 +157,21 @@ public class AddPlayerPanel extends JPanel {
             if(e.getSource() == continueButton) {
                 if(canvasView.getCurrentPlayerNumber() < canvasView.getPlayerNumber() && indexShouldCreateNewPlayer < 0){
 
-                    Player player = new Player(name, keyL, keyR, color);
+                    if(playerInfoChecker()) {
+                        Player player = new Player(name, keyL, keyR, color);
 
+                        canvasView.setPlayer(player);
+                        canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber() + 1);
 
-                    //TODO: COMMENTI SİL
-                    System.out.println(player);
+                        header.setText("PLAYER#" + canvasView.getCurrentPlayerNumber());
+                        playerNameField.setText("");
+                        key1.setText("");
+                        key2.setText("");
+                        q2.setForeground(Color.WHITE);
 
-                    canvasView.setPlayer(player);
-                    canvasView.setCurrentPlayerNumber(canvasView.getCurrentPlayerNumber()+1);
-
-                    header.setText("PLAYER#" + canvasView.getCurrentPlayerNumber());
-                    playerNameField.setText("");
-                    key1.setText("");
-                    key2.setText("");
-                    q2.setForeground(Color.WHITE);
-
-                    CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                    cardLayout.show(canvasView, canvasView.getAddPlayer());
+                        CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
+                        cardLayout.show(canvasView, canvasView.getAddPlayer());
+                    }
                 }
 
                 else if(canvasView.getCurrentPlayerNumber() >= canvasView.getPlayerNumber()&& indexShouldCreateNewPlayer < 0){
@@ -192,11 +189,10 @@ public class AddPlayerPanel extends JPanel {
                 }
 
                 else{
-
                     Player player = new Player(name, keyL, keyR, color);
 
                     // setPlayer(player) method is working with currentPlayerNumber,
-                    // That's why we changes currentPlayerNumber.
+                    // That's why we change currentPlayerNumber.
                     int tempIndex = canvasView.getCurrentPlayerNumber()-1;
                     canvasView.setCurrentPlayerNumber(indexShouldCreateNewPlayer+1);
                     canvasView.setPlayer(player);
@@ -261,14 +257,63 @@ public class AddPlayerPanel extends JPanel {
                 name = playerNameField.getText();
                 System.out.println(name);
             }
-            if(!(key1.getText() == null || key1.getText().trim().isEmpty())) {
+            /*if(!(key1.getText() == null || key1.getText().trim().isEmpty())) {
                 keyL = Integer.parseInt(key1.getText());
+                //keyL = KeyEvent.getExtendedKeyCodeForChar(keyL);
                 System.out.println(keyL);
-            }
-            if(!(key2.getText() == null || key2.getText().trim().isEmpty())) {
+            }*/
+            /*if(!(key2.getText() == null || key2.getText().trim().isEmpty())) {
                 keyR = Integer.parseInt(key2.getText());
-                System.out.println(keyR);
+                String a = KeyEvent.getKeyText(keyR);
+                System.out.println(a);
+            }*/
+        }
+    }
+
+    private class KeyInputListener implements KeyListener{
+        @Override
+        public void keyPressed(KeyEvent e) {
+            displayInfo(e, "KEY TYPED: ");
+        }
+        @Override
+        public void keyReleased(KeyEvent e) {
+            displayInfo(e, "KEY RELEASED");
+        }
+        @Override
+        public void keyTyped(KeyEvent e) {
+            displayInfo(e, "KEY TYPED");
+        }
+
+        private void displayInfo(KeyEvent e, String keyStatus){
+            int id = e.getID();
+            String keyString;
+            if(e.getSource() == key1) {
+                if (id == KeyEvent.KEY_TYPED) {
+                    char c = e.getKeyChar();
+                    keyString = "key character = " + c + " :=)";
+                    System.out.println(keyString);
+                } else {
+                    int keyCode = e.getKeyCode();
+                    keyString = "key code: " + keyCode + " :=)";
+                    //System.out.println(keyString);
+                    keyL = keyCode;
+                    System.out.println(keyL);
+                }
             }
+            if(e.getSource() == key2) {
+                if (id == KeyEvent.KEY_TYPED) {
+                    char c = e.getKeyChar();
+                    keyString = "key character = " + c + " :=)";
+                    System.out.println(keyString);
+                } else {
+                    int keyCode = e.getKeyCode();
+                    keyString = "key code: " + keyCode + " :=)";
+                    //System.out.println(keyString);
+                    keyR = keyCode;
+                    System.out.println(keyR);
+                }
+            }
+
         }
     }
 }
