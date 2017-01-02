@@ -1,61 +1,142 @@
 package Model;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /**
- * Created by Baris Poyraz on 15.12.2016.
+ *  CS-319 PROJECT: CURVE FEWER
+ *
+ *  Contributers:   Barış Polat         |    Instructor:  Bora Güngören
+ *                  Yunus Ölez          |
+ *                  Zeynep Delal Mutlu  |
+ *
+ *  edited on 31.12.2016
  */
-public class Player {
 
+public class Player
+{
+    // Final Values
+    private final int SCREEN_WIDTH = 1000;
+    private final int SCREEN_HEIGHT = 600;
+    final int FIXED_SIZE = 12;
+    final int FIXED_SPEED = 6;
+
+    // Variables
     private String name;
+    private Point currentPoint;
+    private int direction;
+    private Timer inputLagAvoider; // Needed to avoid lags when getting input inside the MoveController class
+    private boolean isGoingLeft; // Needed to be used in MoveController
+    private int leftKeyConfig;
+    private int rightKeyConfig;
     private Color color;
-    private Point point;
-    private KeyStroke leftKey;
-    private KeyStroke rightKey;
+    private int size;
+    private boolean isAlive;
+    private int speed;
 
-
-    public Player(String name) {
-        this.name = name;
-        /*this.color = color;
-        this.point = point;
-        this.leftKey = leftKey;
-        this.rightKey = rightKey;*/
+    public Player (String aName, int lkc, int rkc, Color aColor)
+    {
+        name = aName;
+        currentPoint = new Point (SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+        direction = 0;
+        isGoingLeft = false;
+        inputLagAvoider = new Timer(10, actionListener -> {
+            if (isGoingLeft)
+            {
+                if (direction <= 0)
+                    direction = 359;
+                else
+                    direction -= 2;
+            }
+            else
+            {
+                if (direction >= 359)
+                    direction = 0;
+                else
+                    direction += 2;
+            }
+        });
+        leftKeyConfig = lkc;
+        rightKeyConfig = rkc;
+        color = aColor;
+        size = FIXED_SIZE;
+        isAlive = true;
+        speed = FIXED_SPEED;
     }
 
-    public String getName(){
-        return name;
+    public String getName () { return name; }
+    public Point getCurrentPoint ()
+    {
+        return currentPoint;
     }
-
-    public void setName(String name){
-        this.name = name;
+    public void setCurrentPoint (Point newPoint)
+    {
+        currentPoint = newPoint;
     }
-
-    public Color getColor(){
-        return this.color;
+    public int getDirection ()
+    {
+        return direction;
     }
-
-    public void setColor(Color color){
-        this.color = color;
+    public void setDirection (int newDirection)
+    {
+        direction = newDirection;
     }
-
-    public String toString(){
-        return name;
+    public int getLeftKeyConfig ()
+    {
+        return leftKeyConfig;
     }
-
-    public void setLeftKey(KeyStroke leftKey){
-        this.leftKey = leftKey;
+    public void setLeftKeyConfig (int newLeftKeyConfig)
+    {
+        leftKeyConfig = newLeftKeyConfig;
     }
-
-    public void setRightKey(KeyStroke rightKey){
-        this.rightKey = rightKey;
+    public int getRightKeyConfig ()
+    {
+        return rightKeyConfig;
     }
-
-    public KeyStroke getLeftKey(){
-        return this.leftKey;
+    public void setRightKeyConfig (int newRightKeyConfig)
+    {
+        rightKeyConfig = newRightKeyConfig;
     }
-
-    public KeyStroke getRightKey(){
-        return  this.rightKey;
+    public boolean getIsGoingLeft ()
+    {
+        return isGoingLeft;
     }
+    public void setIsGoingLeft (boolean newBool)
+    {
+        isGoingLeft = newBool;
+    }
+    public void startTimer ()
+    {
+        inputLagAvoider.start();
+    }
+    public void stopTimer ()
+    {
+        inputLagAvoider.stop();
+    }
+    public Color getColor ()
+    {
+        return color;
+    }
+    public void setColor (Color newColor)
+    {
+        color = newColor;
+    }
+    public int getSize ()
+    {
+        return size;
+    }
+    public void setSize (int newSize)
+    {
+        size = newSize;
+    }
+    public boolean isPlayerAlive ()
+    {
+        return isAlive;
+    }
+    public void killPlayer ()
+    {
+        isAlive = false;
+    }
+    public int getSpeed () { return speed; }
+    public void setSpeed (int aSpeed) { speed = aSpeed; }
 }
