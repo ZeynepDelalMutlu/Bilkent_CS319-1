@@ -8,8 +8,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by Baris Poyraz on 9.12.2016.
+ *  CS-319 PROJECT: CURVE FEWER
+ *
+ *  Contributers:   Barış Polat         |    Instructor:  Bora Güngören
+ *                  Yunus Ölez          |
+ *                  Zeynep Delal Mutlu  |
+ *
+ *  edited on 31.12.2016
  */
+
 public class HelpPanel extends JPanel {
 
     private JButton backButton;

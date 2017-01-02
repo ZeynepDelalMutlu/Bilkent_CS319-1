@@ -8,18 +8,22 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by Baris Poyraz on 9.12.2016.
+ *  CS-319 PROJECT: CURVE FEWER
+ *
+ *  Contributers:   Barış Polat         |    Instructor:  Bora Güngören
+ *                  Yunus Ölez          |
+ *                  Zeynep Delal Mutlu  |
+ *
+ *  edited on 31.12.2016
  */
+
 public class SettingsPanel extends JPanel {
 
     private CanvasView canvasView;
     private JButton backButton;
     private JLabel title;
-    private JLabel music;
     private Insets insets;
     private Dimension size;
-
-    private JCheckBox checkMusic;
 
     public SettingsPanel(CanvasView canvasView){
         this.canvasView = canvasView;
@@ -32,18 +36,6 @@ public class SettingsPanel extends JPanel {
 
         title = textDesigner("Settings");
         textPlacer(title, 470+ insets.left, 80 + insets.top);
-
-        music = textDesigner("Music");
-        textPlacer(music, 470 + insets.left, 280 + insets.top);
-
-        checkMusic = new JCheckBox();
-        checkMusic.setBackground(Color.BLACK);
-        checkMusic.setForeground(Color.BLACK);
-        checkMusic.setSelected(true);
-        checkMusic.addActionListener(new ButtonActionListener());
-        size = checkMusic.getPreferredSize();
-        checkMusic.setBounds(440 + insets.left , 285+ insets.top, size.width, size.height );
-        add(checkMusic);
     }
 
     private JButton buttonDesigner(String text){
@@ -90,23 +82,12 @@ public class SettingsPanel extends JPanel {
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
                 cardLayout.show(canvasView, canvasView.getMainMenu());
             }
-            if(e.getSource() == checkMusic){
-                if(!checkMusic.isSelected()) {
-                    canvasView.getMusicPlay().setDisable();
-                }
-                else{
-                    canvasView.getMusicPlay().setEnable();
-
-                }
-            }
         }
-
     }
 
     private class ButtonMouseListener implements MouseListener{
         @Override
-        public void mouseClicked(MouseEvent e) {
-        }
+        public void mouseClicked(MouseEvent e) { }
         @Override
         public void mouseEntered(MouseEvent e) {
             if(e.getSource() == backButton)

@@ -10,8 +10,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by Baris Poyraz on 13.12.2016.
+ *  CS-319 PROJECT: CURVE FEWER
+ *
+ *  Contributers:   Barış Polat         |    Instructor:  Bora Güngören
+ *                  Yunus Ölez          |
+ *                  Zeynep Delal Mutlu  |
+ *
+ *  edited on 31.12.2016
  */
+
 public class PlayerSelectionPanel extends JPanel {
 
     private CanvasView canvasView;
@@ -101,24 +108,15 @@ public class PlayerSelectionPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == continueButton) {
 
-                try{
-                    canvasView.setPlayerNumber(Integer.parseInt(playerField.getText()));
+                canvasView.setPlayerNumber(Integer.parseInt(playerField.getText()));
+                System.out.println(canvasView.getPlayerNumber() + " player selection panelinde sayıyı alabildiim.");
+                p = new Player[canvasView.getPlayerNumber()];
+                canvasView.setPlayers(p);
+                p = null;
+                playerField.setText("2");
 
-                    if(Integer.parseInt(playerField.getText()) < 2){
-                        throw new IllegalArgumentException("");
-                    }
-                    p = new Player[canvasView.getPlayerNumber()];
-                    canvasView.setPlayers(p);
-
-                    CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                    cardLayout.show(canvasView, canvasView.getAddPlayer());
-
-                }catch (NumberFormatException ex){
-                    JOptionPane.showMessageDialog(canvasView,"Enter a number that is at least 2");
-                }
-                catch (IllegalArgumentException ex){
-                    JOptionPane.showMessageDialog(canvasView, "Enter a number that is at least 2");
-                }
+                CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
+                cardLayout.show(canvasView, canvasView.getAddPlayer());
             }
             if(e.getSource() == backButton){
                 CardLayout cardLayout = (CardLayout)(canvasView.getLayout());

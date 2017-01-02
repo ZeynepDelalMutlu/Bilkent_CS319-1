@@ -10,13 +10,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by zeded on 18.12.2016.
+ *  CS-319 PROJECT: CURVE FEWER
+ *
+ *  Contributers:   Barış Polat         |    Instructor:  Bora Güngören
+ *                  Yunus Ölez          |
+ *                  Zeynep Delal Mutlu  |
+ *
+ *  edited on 31.12.2016
  */
+
 public class PlayerScreenPanel extends JPanel{
 
     private CanvasView canvasView;
     private Insets insets;
-    private JButton removeButton;
+    private JButton editButton;
     private JButton startButton;
     private Dimension size;
     private JLabel playerLabel;
@@ -37,11 +44,11 @@ public class PlayerScreenPanel extends JPanel{
         players = new Player[playerNumber];
         players =  canvasView.getPlayers();
 
-        // BUTTONs: startButton and removeButton
+        // BUTTONs: startButton and editButton
         startButton = buttonDesigner("Start");
         buttonPlacer(startButton, 900+ insets.left, 690 + insets.top);
-        removeButton = buttonDesigner("Remove Player");
-        buttonPlacer(removeButton, 10+insets.left, 690+insets.top);
+        editButton = buttonDesigner("edit Player");
+        buttonPlacer(editButton, 10+insets.left, 690+insets.top);
 
         for(int i = 0; i<playerNumber; i++){
             //TODO: color and key labels have to be designed.
@@ -53,7 +60,7 @@ public class PlayerScreenPanel extends JPanel{
             textPlacer(colorLabel, startingXCoordinate + insets.left, (startingYCoordinate + 30+(30*(i+2))) + insets.top);
             colorLabel.setForeground(players[i].getColor());
 
-            keyLabel = textDesigner("Key Configuration: " + players[i].getLeftKeyString() + ", " + players[i].getRightKeyString(), 20);
+            keyLabel = textDesigner("Key Configuration: " + players[i].getLeftKeyConfig() + ", " + players[i].getRightKeyConfig(), 20);
             textPlacer(keyLabel, startingXCoordinate + insets.left, (startingYCoordinate + 30+(30*(i+3))) + insets.top);
 
             startingYCoordinate = startingYCoordinate + 30+(30*(i+3));
@@ -72,7 +79,6 @@ public class PlayerScreenPanel extends JPanel{
         button.setFont(font(30));
         button.addActionListener(new PlayerScreenPanel.ButtonActionListener());
         button.addMouseListener(new PlayerScreenPanel.ButtonMouseListener());
-
         return button;
     }
 
@@ -103,15 +109,15 @@ public class PlayerScreenPanel extends JPanel{
     private class ButtonActionListener implements ActionListener{
 
         public void actionPerformed(ActionEvent e) {
-            //TODO CONTINUE BUTTON
-            if(e.getSource() == removeButton) {
+            if(e.getSource() == editButton) {
                 players = null;
                 CardLayout cardLayout = (CardLayout) (canvasView.getLayout());
-                cardLayout.show(canvasView, canvasView.getRemovePlayer());
+                cardLayout.show(canvasView, canvasView.getEditPlayer());
             }
             if(e.getSource() == startButton){
-                CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
-                cardLayout.show(canvasView, canvasView.getMainMenu());
+                canvasView.shouldStartGame(true);
+                //CardLayout cardLayout = (CardLayout)(canvasView.getLayout());
+                //cardLayout.show(canvasView, canvasView.getMainMenu());
             }
         }
     }
@@ -119,14 +125,14 @@ public class PlayerScreenPanel extends JPanel{
     private class ButtonMouseListener implements MouseListener{
         @Override
         public void mouseEntered(MouseEvent e) {
-            if(e.getSource() == removeButton)
-                removeButton.setForeground(new Color(47, 165, 255));
+            if(e.getSource() == editButton)
+                editButton.setForeground(new Color(47, 165, 255));
             if(e.getSource() == startButton)
                 startButton.setForeground(new Color(47, 165, 255));
         }
         @Override
         public void mouseExited(MouseEvent e) {
-            removeButton.setForeground(Color.WHITE);
+            editButton.setForeground(Color.WHITE);
             startButton.setForeground(Color.WHITE);
         }
         @Override

@@ -1,17 +1,23 @@
 package View;
 
 import Model.Player;
-import Music.MusicPlay;
+import Controller.Controller;
 //import Music.MusicPlay;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Baris Poyraz on 8.12.2016.
+ *  CS-319 PROJECT: CURVE FEWER
+ *
+ *  Contributers:   Barış Polat         |    Instructor:  Bora Güngören
+ *                  Yunus Ölez          |
+ *                  Zeynep Delal Mutlu  |
+ *
+ *  edited on 31.12.2016
  */
-public class CanvasView extends JPanel {
 
+public class CanvasView extends JPanel {
     //Instances for View Classes
     private MainMenuPanel mainMenuPanel;
     private PlayerSelectionPanel playerSelectionPanel;
@@ -20,9 +26,9 @@ public class CanvasView extends JPanel {
     private CreditsPanel creditsPanel;
     private HelpPanel helpPanel;
     private PlayerScreenPanel playerScreenPanel;
-    private RemovePlayerPanel removePlayerPanel;
+    private EditPlayerPanel editPlayerPanel;
 
-    private MusicPlay musicPlay;
+   // private MusicPlay musicPlay;
 
     //Strings for CardLayout: Switching from Panels
     private final String mainMenu = "Main Menu";
@@ -32,21 +38,25 @@ public class CanvasView extends JPanel {
     private final String creditsMenu = "Credits Menu";
     private final String helpMenu = "Help Menu";
     private final String playerScreen = "Player Screen";
-    private final String removePlayer = "Remove Player";
+    private final String editPlayer = "Edit Player";
+
 
     public Player[] players;
     private Player player;
     private int playerNumber;
     private int currentPlayerNumber = 1;
+    private int indexEditPlayer = -1;
     private int indexRemovePlayer = -1;
+    private boolean playersEdited = false;
+    private boolean shouldStartGame = false;
 
 
     //TODO: ADD ALL PANELS IN CANVASVIEW
 
     //Constructor for CanvasView
     public CanvasView(){
-
         super(new CardLayout());
+
         //musicPlay = new MusicPlay();
 
         //Creates each panel
@@ -66,8 +76,20 @@ public class CanvasView extends JPanel {
         super.add(helpPanel, helpMenu);
     }
 
-    public void removePlayer(){
-        players[indexRemovePlayer] = null;
+    public void shouldStartGame(boolean shouldStartGame){
+        this.shouldStartGame = shouldStartGame;
+    }
+
+    public boolean getShouldStartGame(){
+        return shouldStartGame;
+    }
+
+    public void setPlayersEdited(boolean playersEdited){
+        this.playersEdited = playersEdited;
+    }
+
+    public boolean getPlayersEdited(){
+        return playersEdited;
     }
 
     public int getPlayerNumber(){
@@ -99,17 +121,57 @@ public class CanvasView extends JPanel {
     }
 
     public void setPlayer(Player p){
-        player = p;
-        players[getCurrentPlayerNumber()-1] =player;
+        players[getCurrentPlayerNumber()-1] = p;
     }
 
-    public void setIndexRemovePlayer(int indexRemovePlayer){
-        this.indexRemovePlayer = indexRemovePlayer;
-        System.out.println("canvasta removeIndex i set ettim: " + indexRemovePlayer);
+    public void setIndexEditPlayer(int indexEditPlayer){
+        this.indexEditPlayer = indexEditPlayer;
+    }
+
+    public int getIndexEditPlayer(){
+        return indexEditPlayer;
     }
 
     public int getIndexRemovePlayer(){
         return indexRemovePlayer;
+    }
+
+    public void setIndexRemovePlayer(int indexRemovePlayer){
+        this.indexRemovePlayer = indexRemovePlayer;
+    }
+
+    public void makeEditPlayerNull(){
+        players[indexEditPlayer] = null;
+    }
+
+    public void deletePlayer(){
+        int firstPart;
+        int newIndex = 0;
+        Player[] newPlayers = new Player[getPlayerNumber()-1];
+
+        if(playerNumber >= 2){
+            for(firstPart = 0; firstPart < indexRemovePlayer; firstPart++){
+                newPlayers[newIndex] = players[firstPart];
+                newIndex++;
+            }
+            for(int secondPart = firstPart + 1; secondPart < playerNumber; secondPart++){
+                newPlayers[newIndex] = players[secondPart];
+                newIndex++;
+            }
+        }
+        else{
+            System.out.println("HOP EN AZ 2 OYUNCU!");
+        }
+
+        players = newPlayers;
+        newPlayers = null;
+        setIndexRemovePlayer(-1);
+        editPlayerPanel.setIndexRemovePlayer(-1);
+        setPlayerNumber(playerNumber - 1);
+        playerScreenPanel.setPlayerNumber(getPlayerNumber());
+        addPlayerPanel.setPlayerNumber(getPlayerNumber());
+        playerScreenPanel.setPlayerNumber(getPlayerNumber());
+        editPlayerPanel.setPlayerNumber(getPlayerNumber());
     }
 
     /**
@@ -125,11 +187,26 @@ public class CanvasView extends JPanel {
      * @return playerSelection Key String for CardLayout
      */
     public String getPlay(){
+        players = null;
+        setCurrentPlayerNumber(1);
+        setPlayerNumber(0);
+        addPlayerPanel.setCurrentPlayerNumber(1);
+        addPlayerPanel.setPlayerNumber(0);
         return playerSelection;
     }
 
     public String getAddPlayer(){
-        addPlayerPanel.setRemoveIndex(indexRemovePlayer);
+        if(getPlayersEdited()) {
+            addPlayerPanel.setPlayersEdited(true);
+            addPlayerPanel.remove(addPlayerPanel.getBackJButton());
+            addPlayerPanel.remove(addPlayerPanel.getContinueJButton());
+            addPlayerPanel.add(addPlayerPanel.getOkayJButton());
+        }
+        if(getIndexEditPlayer() >= 0) {
+            addPlayerPanel.setEditIndex(getIndexEditPlayer());
+            editPlayerPanel.setIndexEditPlayer(-1);
+            addPlayerPanel.setHead("Player#" + (getIndexEditPlayer() +1));
+        }
         return addPlayer;
     }
 
@@ -157,10 +234,10 @@ public class CanvasView extends JPanel {
         return creditsMenu;
     }
 
-    public String getRemovePlayer(){
-        removePlayerPanel = new RemovePlayerPanel(this);
-        super.add(removePlayerPanel, removePlayer);
-        return removePlayer;
+    public String getEditPlayer(){
+        editPlayerPanel = new EditPlayerPanel(this);
+        super.add(editPlayerPanel, editPlayer);
+        return editPlayer;
     }
 
     public String getPlayerScreen(){
@@ -168,8 +245,7 @@ public class CanvasView extends JPanel {
         super.add(playerScreenPanel, playerScreen);
         return playerScreen;
     }
-
-    public MusicPlay getMusicPlay(){
-      return musicPlay;
-    }
+    //public MusicPlay getMusicPlay(){
+      //  return musicPlay;
+    //}
 }

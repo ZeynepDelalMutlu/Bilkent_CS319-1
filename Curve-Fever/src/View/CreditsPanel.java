@@ -8,8 +8,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Created by Baris Poyraz on 8.12.2016.
+ *  CS-319 PROJECT: CURVE FEWER
+ *
+ *  Contributers:   Barış Polat         |    Instructor:  Bora Güngören
+ *                  Yunus Ölez          |
+ *                  Zeynep Delal Mutlu  |
+ *
+ *  edited on 31.12.2016
  */
+
 public class CreditsPanel extends JPanel {
 
     private CanvasView canvasView;
@@ -33,7 +40,7 @@ public class CreditsPanel extends JPanel {
 
         heading = textDesigner("Credits");
         credits1 = textDesigner("<html>This project is part of CS319<br>course in Bilkent University.</html>" );
-        credits2 = textDesigner("<html><center>Yunus Ölez<br>Barış Poyraz<br>Zeynep Delal Mutlu</center></html>");
+        credits2 = textDesigner("<html><center>Barış Poyraz<br>Yunus Ölez<br>Zeynep Delal Mutlu</center></html>");
         credits3 = textDesigner("<html><center>Special thanks to<br>Bora Güngören</center></html>");
 
         textPlacer(heading,470+ insets.left, 80 + insets.top);
